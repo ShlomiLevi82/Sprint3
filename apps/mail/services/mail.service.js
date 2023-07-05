@@ -117,7 +117,7 @@ function _setNextPrevMailId(mail) {
     mail.prevMailId = mails[mailIdx - 1]
       ? mails[mailIdx - 1].id
       : mails[mails.length - 1].id
-    console.log('book', mail)
+    console.log('mail', mail)
     return mail
   })
 }
@@ -158,7 +158,7 @@ function setFilterBy(filterBy = {}) {
 
 function getNextMailId(mailId) {
   return storageService.query(MAIL_KEY).then((mails) => {
-    var idx = mails.findIndex((mail) => mail.id === mailId)
+    let idx = mails.findIndex((mail) => mail.id === mailId)
     if (idx === mails.length - 1) idx = -1
     return mails[idx + 1].id
   })

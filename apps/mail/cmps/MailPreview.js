@@ -16,8 +16,9 @@ export default {
         <p>
             {{getDate}}
         </p>
-        <section class = "icons">
-            <span class="material-icons-outlined" @click="onRemoveMail(mail.id)">
+        <!-- <section class = "icons">
+            <span class="material-icons-outlined" 
+            @click.stop="onRemoveMail(mail.id)" >
                 delete
             </span>
             <span class="material-icons-outlined">
@@ -26,7 +27,7 @@ export default {
             <span class="material-icons-outlined">
                 archive
             </span> 
-        </section>
+        </section> -->
     </section> 
 </RouterLink> 
 
@@ -34,7 +35,7 @@ export default {
 
   data() {
     return {
-      isRead,
+      // isRead,
     }
   },
 

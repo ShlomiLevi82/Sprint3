@@ -1,0 +1,11 @@
+.note-edit {
+    display: grid;
+    justify-items: start;
+    gap: 5px;
+    padding: 10px;
+    background-color: var(--rich-black);
+}
+
+.note-edit button {
+    /* justify-self: end; */
+}

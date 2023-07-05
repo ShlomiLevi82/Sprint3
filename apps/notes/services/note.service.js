@@ -15,7 +15,7 @@ export const noteService = {
   get,
   remove,
   save,
-  getEmptynote,
+  getEmptyNote,
   getNextnoteId,
   getFilterBy,
   setFilterBy,
@@ -24,27 +24,26 @@ export const noteService = {
 };
 
 function query() {
-    return storageService.query(note_KEY).then((notes) => {
-      if (gFilterBy.txt) {
-        const regex = new RegExp(gFilterBy.txt, "i");
-        notes = notes.filter((note) => regex.test(note.info.txt));
-      }
-      if (gFilterBy.price) {
-        notes = notes.filter((note) => note.listPrice.price >= gFilterBy.price);
-      }
-      if (gPageIdx !== undefined) {
-        const startIdx = gPageIdx * PAGE_SIZE;
-        notes = notes.slice(startIdx, startIdx + PAGE_SIZE);
-      }
-      if (gSortBy.noteType !== undefined) {
-        notes.sort((n1, n2) => (n1.info.txt - n2.info.txt) * gSortBy.noteType);
-      } else if (gSortBy.txt !== undefined) {
-        notes.sort((n1, n2) => (n1.info.txt - n2.info.txt) * gSortBy.txt);
-      }
-      return notes;
-    });
-  }
-  
+  return storageService.query(note_KEY).then((notes) => {
+    if (gFilterBy.txt) {
+      const regex = new RegExp(gFilterBy.txt, "i");
+      notes = notes.filter((note) => regex.test(note.info.txt));
+    }
+    if (gFilterBy.price) {
+      notes = notes.filter((note) => note.listPrice.price >= gFilterBy.price);
+    }
+    if (gPageIdx !== undefined) {
+      const startIdx = gPageIdx * PAGE_SIZE;
+      notes = notes.slice(startIdx, startIdx + PAGE_SIZE);
+    }
+    if (gSortBy.noteType !== undefined) {
+      notes.sort((n1, n2) => (n1.info.txt - n2.info.txt) * gSortBy.noteType);
+    } else if (gSortBy.txt !== undefined) {
+      notes.sort((n1, n2) => (n1.info.txt - n2.info.txt) * gSortBy.txt);
+    }
+    return notes;
+  });
+}
 
 function get(noteId) {
   return storageService
@@ -77,14 +76,14 @@ function save(note) {
   }
 }
 
-function getEmptynote(type = "", txt = "") {
+function getEmptyNote(type = "", txt = "") {
   return {
-    id: "n101",
-    createdAt: 1112222,
+    id: "",
+    createdAt: utilService.getTime("notes"),
     type: "NoteTxt",
     isPinned: true,
     style: { backgroundColor: "#00d" },
-    info: { txt: "Fullstack Me Baby!" },
+    info: { txt: "" },
   };
 }
 
@@ -126,22 +125,24 @@ function _createnotes() {
   if (!notes || !notes.length) {
     notes = [
       {
-        id: "n101",
-        createdAt: 1112222,
+        id: utilService.makeId(),
+        createdAt: utilService.getTime("notes"),
         type: "NoteTxt",
         isPinned: true,
         style: { backgroundColor: "#00d" },
         info: { txt: "Fullstack Me Baby!" },
       },
       {
-        id: "n102",
+        id: utilService.makeId(),
+        createdAt: utilService.getTime("notes"),
         type: "NoteImg",
         isPinned: false,
         info: { url: "http://some-img/me", txt: "Bobi and Me" },
         style: { backgroundColor: "#00d" },
       },
       {
-        id: "n103",
+        id: utilService.makeId(),
+        createdAt: utilService.getTime("notes"),
         type: "NoteTodos",
         isPinned: false,
         info: {
@@ -153,21 +154,24 @@ function _createnotes() {
         },
       },
       {
-        id: "n104",
+        id: utilService.makeId(),
+        createdAt: utilService.getTime("notes"),
         type: "NoteTxt",
         isPinned: false,
         style: { backgroundColor: "#f80" },
         info: { txt: "Remember to buy milk" },
       },
       {
-        id: "n105",
+        id: utilService.makeId(),
+        createdAt: utilService.getTime("notes"),
         type: "NoteImg",
         isPinned: true,
         info: { url: "http://some-img/cats", txt: "Cute Cats" },
         style: { backgroundColor: "#f0f" },
       },
       {
-        id: "n106",
+        id: utilService.makeId(),
+        createdAt: utilService.getTime("notes"),
         type: "NoteTodos",
         isPinned: true,
         info: {
@@ -180,7 +184,8 @@ function _createnotes() {
         },
       },
       {
-        id: "n107",
+        id: utilService.makeId(),
+        createdAt: utilService.getTime("notes"),
         type: "NoteTxt",
         isPinned: false,
         style: { backgroundColor: "#0f0" },
@@ -193,7 +198,7 @@ function _createnotes() {
 }
 
 function _createnote(txt, noteType = 250) {
-  const note = getEmptynote(txt, noteType);
+  const note = getEmptyNote(txt, noteType);
   note.id = utilService.makeId();
   return note;
 }

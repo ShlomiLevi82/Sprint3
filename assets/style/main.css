@@ -1,3 +1,4 @@
+
 /* Setup */
 @import 'setup/vars.css';
 @import 'setup/typography.css';
@@ -14,6 +15,13 @@
 @import 'cmps/AppHeader.css';
 
 /* Apps */
+/* Mail */
 @import 'apps/mail/MailIndex.css';
 @import 'apps/mail/MailPreview.css';
-@import 'apps/note/NoteIndex.css';
+
+
+/* Notes */
+@import 'apps/notes/cmps/NoteList.css';
+@import 'apps/notes/cmps/note-details.css';
+@import 'apps/notes/cmps/note-edit.css';
+@import 'apps/notes/cmps/note-filter.css';
