@@ -1,20 +1,37 @@
 .note-list ul {
-  display: grid;
-  justify-items: center;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 60px;
-  padding: 10px;
-  
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+  columns: 4 230px;
+  column-count: auto;
+
   background-color: var(--ocean-blue);
 }
+
+
 .note-list ul li {
-  display: grid;
-  align-content: space-between;
-  justify-content: center;
-  padding: 10px;
+  
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  
+  
+  width: 15em;
+  height: 20em;
+
+  break-inside: avoid-column;
   background-color: var(--air-force-blue);
-  cursor: pointer;
+  
+/* margin-bottom: 20px; */
+  border-radius: 25px;
   border: 1px solid rgb(94, 57, 57);
+
+  cursor: pointer;
 
   transition: transform 0.3s ease-in-out;
 }
@@ -27,16 +44,6 @@
   text-align: center;
   margin-top: 0;
   height: 2.3em;
-}
-.note-list li h2:nth-child(3) {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0;
-}
-.note-list ul li .actions {
-  display: flex;
-  justify-content: space-between;
 }
 
 .list-enter-active,

@@ -6,6 +6,6 @@
     background-color: var(--rich-black);
 }
 
-.note-edit button {
-    /* justify-self: end; */
+.note-edit input {
+    padding: 0px;
 }

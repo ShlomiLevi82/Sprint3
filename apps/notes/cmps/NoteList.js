@@ -6,7 +6,7 @@ export default {
     <section class="note-list">
       <TransitionGroup name="list" tag="ul">
         <li v-for="note in notes" :key="note.id" >
-          <NotePreview :note="note" @click="test(note.id)" />
+          <NotePreview :note="note" />
 <section class="actions">
           <button @click="onRemoveNote(note.id)">X</button>
           </section>
@@ -22,9 +22,6 @@ export default {
   methods: {
     onRemoveNote(noteId) {
       this.$emit("remove", noteId);
-    },
-    test(noteId){
-      console.log(noteId);
     },
   },
 

@@ -82,7 +82,7 @@ function getEmptyNote(type = "", txt = "") {
     createdAt: utilService.getTime("notes"),
     type: "NoteTxt",
     isPinned: true,
-    style: { backgroundColor: "#00d" },
+    style: { backgroundColor: "#0000d" },
     info: { txt: "" },
   };
 }

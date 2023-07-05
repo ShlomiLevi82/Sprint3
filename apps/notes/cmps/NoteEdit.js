@@ -4,14 +4,23 @@ export default {
   template: `<form @submit.prevent="save" class="note-edit">
         <h1> {{(noteToEdit.id) ? 'Edit' : 'Add'}} Note</h1>
         <input v-model="noteToEdit.info.txt" type="text" placeHolder="Write a note"/>
-        
+        <input v-model="noteToEdit.style.backgroundColor" type="color">
+        <input v-model="noteToEdit.type" type="radio" placeHolder="Write a note"/>
         
         <button :disabled="!isValid">save</button>
         <RouterLink to="/notes">Cancel</RouterLink>
     </form>`,
   data() {
     return {
-      noteToEdit: noteService.getEmptyNote(),
+      noteToEdit: {
+        info: {
+          txt: '',
+        },
+        style: {
+          backgroundColor: '',
+        },
+        type: '',
+      },
     };
   },
   computed: {
