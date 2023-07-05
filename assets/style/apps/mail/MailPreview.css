@@ -13,3 +13,7 @@
 .mail-preview:hover {
   box-shadow: 1px 1px 8px 0px;
 }
+
+.read {
+  background-color: #c4bcba;
+}

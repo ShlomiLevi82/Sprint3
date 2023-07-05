@@ -1,12 +1,21 @@
 import { mailService } from '../services/mail.service.js'
+import MailFilter from '../cmps/MailFilter.js'
 
 export default {
   props: ['mail'],
   template: `
+
+        <MailFilter> </MailFilter>
+
         <RouterLink to="/mail">Back to List</RouterLink>            
-        <section class="mail-details">
+        <section v-if="mail"  class="mail-details">
+
             <h2>{{ mail.subject }}</h2>
-            <h3>{{ mail.sentAt }}</h3>    
+            <h2>{{ mail.from }}</h2>
+            <h3>sent at {{ mail.sentAt }}</h3>
+            <main class="mail-body">
+                <p>{{ mail.body }}</p>
+            </main>
         </section>
         `,
 
@@ -47,5 +56,8 @@ export default {
     mailId() {
       return this.$route.params.mailId
     },
+  },
+  components: {
+    MailFilter,
   },
 }

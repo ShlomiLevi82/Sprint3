@@ -3,7 +3,7 @@ export default {
   template: `
 
 <RouterLink :to="'/mail/' + mail.id">
-    <section class="mail-preview">  
+    <section class="mail-preview ">  
         <span class="material-icons-outlined star">
             star_outline
         </span>        
@@ -16,8 +16,9 @@ export default {
         <p>
             {{getDate}}
         </p>
-        <section class = "icons">
-            <span class="material-icons-outlined" @click="onRemoveMail(mail.id)">
+        <!-- <section class = "icons">
+            <span class="material-icons-outlined" 
+            @click.stop="onRemoveMail(mail.id)" >
                 delete
             </span>
             <span class="material-icons-outlined">
@@ -26,11 +27,17 @@ export default {
             <span class="material-icons-outlined">
                 archive
             </span> 
-        </section>
+        </section> -->
     </section> 
 </RouterLink> 
 
  `,
+
+  data() {
+    return {
+      // isRead,
+    }
+  },
 
   computed: {
     getDate() {

@@ -1,27 +1,27 @@
-import HomePage from "./views/HomePage.js";
-import AboutUs from "./views/AboutUs.js";
+import HomePage from './views/HomePage.js'
+import AboutUs from './views/AboutUs.js'
 
-import MailIndex from "./apps/mail/cmps/MailIndex.js";
-import MailDitails from "./apps/mail/cmps/MailDitails.js";
+import MailIndex from './apps/mail/cmps/MailIndex.js'
+import MailDitails from './apps/mail/cmps/MailDitails.js'
 
-import NoteIndex from "./apps/notes/pages/NoteIndex.js";
-import NoteEdit from "./apps/notes/cmps/NoteEdit.js";
+import NoteIndex from './apps/notes/pages/NoteIndex.js'
+import NoteEdit from './apps/notes/cmps/NoteEdit.js'
 
-const { createRouter, createWebHashHistory } = VueRouter;
+const { createRouter, createWebHashHistory } = VueRouter
 
 const routerOptions = {
   history: createWebHashHistory(),
   routes: [
     {
-      path: "/",
+      path: '/',
       component: HomePage,
     },
     {
-      path: "/about",
+      path: '/about',
       component: AboutUs,
     },
     {
-      path: "/mail",
+      path: '/mail',
       component: MailIndex,
     },
     {
@@ -29,14 +29,14 @@ const routerOptions = {
       component: MailDitails,
     },
     {
-      path: "/notes",
+      path: '/notes',
       component: NoteIndex,
     },
     {
-    path: "/notes/editNote/:noteId?",
-    component: NoteEdit
-  }
-  ]
-};
+      path: '/notes/editNote/:noteId?',
+      component: NoteEdit,
+    },
+  ],
+}
 
-export const router = createRouter(routerOptions);
+export const router = createRouter(routerOptions)

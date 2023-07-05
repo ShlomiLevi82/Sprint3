@@ -62,6 +62,14 @@ const eMails = [
   },
 ]
 
+const criteria = {
+  status: 'inbox/sent/trash/draft',
+  txt: 'puki', // no need to support complex text search
+  isRead: true, // (optional property, if missing: show all)
+  isStared: true, // (optional property, if missing: show all)
+  lables: ['important', 'romantic'], // has any of the labels
+}
+
 // function query() {
 //   console.log('email', eMails)
 //   return Promise.resolve(eMails)
@@ -109,7 +117,7 @@ function _setNextPrevMailId(mail) {
     mail.prevMailId = mails[mailIdx - 1]
       ? mails[mailIdx - 1].id
       : mails[mails.length - 1].id
-    console.log('book', mail)
+    console.log('mail', mail)
     return mail
   })
 }
@@ -150,7 +158,7 @@ function setFilterBy(filterBy = {}) {
 
 function getNextMailId(mailId) {
   return storageService.query(MAIL_KEY).then((mails) => {
-    var idx = mails.findIndex((mail) => mail.id === mailId)
+    let idx = mails.findIndex((mail) => mail.id === mailId)
     if (idx === mails.length - 1) idx = -1
     return mails[idx + 1].id
   })
