@@ -22,3 +22,12 @@ const email = [
     to: 'user@appsus.com',
   },
 ]
+
+export const mailService = {
+  query,
+}
+
+function query() {
+  console.log('email', email)
+  return Promise.resolve(email)
+}
