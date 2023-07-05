@@ -3,7 +3,7 @@ export default {
   template: `
 
 <RouterLink :to="'/mail/' + mail.id">
-    <section class="mail-preview">  
+    <section class="mail-preview ">  
         <span class="material-icons-outlined star">
             star_outline
         </span>        
@@ -31,6 +31,12 @@ export default {
 </RouterLink> 
 
  `,
+
+  data() {
+    return {
+      isRead,
+    }
+  },
 
   computed: {
     getDate() {

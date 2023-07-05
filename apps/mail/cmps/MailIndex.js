@@ -12,34 +12,39 @@ export default {
         v-model="searchTerm"/>
         <button>Search</button> 
     </section>
-<div class="mail-index">
 
+    <div class="mail-index">
     <section class="mail-manu">
-    <div class="inbox">
-        <span class="material-icons-outlined">
-            inbox
-        </span> Inbox
-    </div>
-    <div class="star">
-        <span class="material-icons-outlined star">
-            star_outline
-        </span> Starred 
-    </div>
-    <div class="sent">
-        <span class="material-icons-outlined">
-            send
-        </span>Sent
-    </div>
-    <div class="draft">
-        <span class="material-icons-outlined">
-        insert_drive_file
-        </span>Draft
-    </div>
-    <div class="trash">
-        <span class="material-icons-outlined">
-        delete_outline
-        </span>Trash
-    </div>
+        <div class="compose">
+            <span class="material-icons-outlined">
+                add
+            </span>Compose
+        </div>
+        <div class="inbox">
+            <span class="material-icons-outlined">
+                inbox
+            </span> Inbox
+        </div>
+        <div class="star">
+            <span class="material-icons-outlined star">
+                star_outline
+            </span> Starred 
+        </div>
+        <div class="sent">
+            <span class="material-icons-outlined">
+                send
+            </span>Sent
+        </div>
+        <div class="draft">
+            <span class="material-icons-outlined">
+            insert_drive_file
+            </span>Draft
+        </div>
+        <div class="trash">
+            <span class="material-icons-outlined">
+            delete_outline
+            </span>Trash
+        </div>
     </section >
         <section class="mail-index">                  
             <MailList 
