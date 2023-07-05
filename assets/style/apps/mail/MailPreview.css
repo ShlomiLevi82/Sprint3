@@ -5,3 +5,11 @@
   justify-content: space-around;
   border: 1px solid #c2c2c2;
 }
+
+.mail-preview .star {
+  cursor: pointer;
+}
+
+.mail-preview:hover {
+  box-shadow: 1px 1px 8px 0px;
+}

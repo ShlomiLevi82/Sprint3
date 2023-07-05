@@ -1,0 +1,11 @@
+.mail-index-header {
+  display: flex;
+  gap: 1em;
+}
+
+.mail-index {
+  display: flex;
+}
+.mail-manu {
+  display: grid;
+}
