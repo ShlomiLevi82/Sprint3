@@ -1,5 +1,10 @@
 //Demo Data
 
+const loggedinUser = {
+  email: 'user@appsus.com',
+  fullname: 'Mahatma Appsus',
+}
+
 const email = [
   {
     id: 'e101',
