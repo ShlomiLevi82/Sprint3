@@ -1,25 +1,24 @@
 import { noteService } from "../services/note.service.js";
 
 export default {
-  template: `<form @submit.prevent="save" class="note-edit">
-        <h1> {{(noteToEdit.id) ? 'Edit' : 'Add'}} Note</h1>
-        <input v-model="noteToEdit.info.txt" type="text" placeHolder="Write a note"/>
-        <input v-model="noteToEdit.style.backgroundColor" type="color">
-        <input v-model="noteToEdit.type" type="radio" placeHolder="Write a note"/>
-        
-        <button :disabled="!isValid">save</button>
-        <RouterLink to="/notes">Cancel</RouterLink>
-    </form>`,
-  data() {
+  template: `  <form @submit.prevent="save" class="note-edit">
+  <h1>{{ noteToEdit.id ? 'Edit' : 'Add' }} Note</h1>
+  <input v-model="noteToEdit.info.txt" type="text" placeholder="Write a note" />
+  <input v-model="noteToEdit.style.backgroundColor" type="color" />
+
+  <button :disabled="!isValid">Save</button>
+  <router-link to="/notes">Cancel</router-link>
+</form>
+     `,
+   data() {
     return {
       noteToEdit: {
         info: {
-          txt: '',
+          txt: "",
         },
         style: {
-          backgroundColor: '',
+          backgroundColor: "#de7c7e",
         },
-        type: '',
       },
     };
   },
@@ -53,4 +52,5 @@ export default {
         });
     },
   },
+
 };

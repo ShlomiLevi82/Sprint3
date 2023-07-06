@@ -129,7 +129,7 @@ function _createnotes() {
         createdAt: utilService.getTime("notes"),
         type: "NoteTxt",
         isPinned: true,
-        style: { backgroundColor: "#00d" },
+        style: { backgroundColor: utilService.getRandomColor() },
         info: { txt: "Fullstack Me Baby!" },
       },
       {
@@ -138,13 +138,14 @@ function _createnotes() {
         type: "NoteImg",
         isPinned: false,
         info: { url: "http://some-img/me", txt: "Bobi and Me" },
-        style: { backgroundColor: "#00d" },
+        style: { backgroundColor: utilService.getRandomColor() },
       },
       {
         id: utilService.makeId(),
         createdAt: utilService.getTime("notes"),
         type: "NoteTodos",
         isPinned: false,
+        style: {backgroundColor: utilService.getRandomColor()},
         info: {
           txt: "Get my stuff together",
           todos: [
@@ -158,7 +159,7 @@ function _createnotes() {
         createdAt: utilService.getTime("notes"),
         type: "NoteTxt",
         isPinned: false,
-        style: { backgroundColor: "#f80" },
+        style: {backgroundColor: utilService.getRandomColor()},
         info: { txt: "Remember to buy milk" },
       },
       {
@@ -167,13 +168,14 @@ function _createnotes() {
         type: "NoteImg",
         isPinned: true,
         info: { url: "http://some-img/cats", txt: "Cute Cats" },
-        style: { backgroundColor: "#f0f" },
+        style: {backgroundColor: utilService.getRandomColor()},
       },
       {
         id: utilService.makeId(),
         createdAt: utilService.getTime("notes"),
         type: "NoteTodos",
         isPinned: true,
+        style: {backgroundColor: utilService.getRandomColor()},
         info: {
           txt: "Grocery List",
           todos: [
@@ -188,7 +190,7 @@ function _createnotes() {
         createdAt: utilService.getTime("notes"),
         type: "NoteTxt",
         isPinned: false,
-        style: { backgroundColor: "#0f0" },
+        style: {backgroundColor: utilService.getRandomColor()},
         info: { txt: "Meeting at 3 PM" },
       },
     ];
