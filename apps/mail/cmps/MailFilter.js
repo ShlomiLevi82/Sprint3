@@ -8,8 +8,7 @@ export default {
             type="text"
             placeholder="Search "
             v-model="filterBy.txt"
-            @input="onSetFilterBy"/>
-        
+            @input="onSetFilterBy"/>        
     </section>
         <section class="mail-manu">
             <div class="compose" @click.stop="toggleCompose">
@@ -17,27 +16,27 @@ export default {
                     create
                 </span>Compose
             </div>
-            <div class="inbox">
+            <div class="inbox icon">
                 <span class="material-icons-outlined">
                     inbox
                 </span> Inbox
             </div>
-            <div class="star">          
+            <div class="star icon">          
                 <span class="material-icons-outlined star">
                     star_outline
                 </span> Starred 
             </div>
-            <div class="sent">
+            <div class="sent icon">
                 <span class="material-icons-outlined">
                     send
                 </span>Sent
             </div>
-            <div class="draft">
+            <div class="draft icon">
                 <span class="material-icons-outlined">
                 insert_drive_file
                 </span>Draft
             </div>
-            <div class="trash">
+            <div class="trash icon">
                 <span class="material-icons-outlined">
                 delete_outline
                 </span>Trash

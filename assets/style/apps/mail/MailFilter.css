@@ -2,6 +2,9 @@
   width: 142px;
   margin-inline-start: 10px;
   margin-block-end: 5px;
+  border-radius: 5px;
+  background-color: #c2d8ec;
+  border: 1px solid #d7d1d1;
 }
 
 .mail-index-header {
@@ -36,4 +39,11 @@
 
 .main-wrapper {
   display: flex;
+}
+
+.icon:hover {
+  cursor: pointer;
+  background-color: #d7dfe8;
+  border-radius: 20px;
+  width: 100px;
 }
