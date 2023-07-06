@@ -6,7 +6,7 @@ import NoteEdit from "../cmps/NoteEdit.js";
 
 export default {
   template: `
-    <div>
+    <section class="main-layout">
       <h1>Notes</h1>
       <RouterLink to="/notes/editNote"><button>Add note</button></RouterLink>
       <section class="notes-index">
@@ -14,7 +14,7 @@ export default {
         <NoteList  :notes="filteredNotes" @remove="removeNote"/>
 
       </section>
-    </div>
+    </section>
   `,
   data() {
     return {

@@ -4,27 +4,24 @@ export default {
   props: ["notes"],
   template: `
     <section class="note-list">
-      <TransitionGroup name="list" tag="ul">
-        <li v-for="note in notes" :key="note.id" >
+      <transition-group name="list" tag="ul">
+        <li v-for="note in notes" :key="note.id" :style="note.style">
           <NotePreview :note="note" />
-<section class="actions">
-          <button @click="onRemoveNote(note.id)">X</button>
+          <section class="actions">
+            <button @click="onRemoveNote(note.id)">X</button>
           </section>
         </li>
-        </TransitionGroup>
+      </transition-group>
     </section>
   `,
   data() {
-    return {
-      modal: false,
-    };
+    return {};
   },
   methods: {
     onRemoveNote(noteId) {
       this.$emit("remove", noteId);
     },
   },
-
   components: {
     NotePreview,
   },

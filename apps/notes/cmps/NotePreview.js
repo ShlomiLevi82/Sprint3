@@ -1,10 +1,11 @@
 export default {
     props: ["note"],
     template: `
+    
         <article class="note-preview" @click="clickHandler">
-          <h1>{{ note.type }}</h1>
-          <h1>{{ note.info.txt }}</h1>
-          <h1>{{ note.createdAt }}</h1>
+          <h2>{{ note.type }}</h2>
+          <p>{{ note.info.txt }}</p>
+          <p>{{ note.createdAt }}</p>
         </article>
       `,
         methods: {
