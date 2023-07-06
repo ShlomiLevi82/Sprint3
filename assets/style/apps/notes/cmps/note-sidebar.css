@@ -1,0 +1,23 @@
+.note-sidebar {
+  min-width: 280px;
+  /* height: 900px; */
+}
+
+.note-sidebar li {
+  display: flex;
+  list-style: none;
+  font-family: "Google Sans", "Roboto", "Arial", sans-serif;
+  cursor: pointer;
+  text-align: center;
+  font-weight: 500;
+  height: 4em;
+  padding: 1em;
+  border-radius: 0 20px 20px 0;
+}
+.note-sidebar span {
+  margin-right: 1em;
+}
+
+.note-sidebar li:hover {
+  background-color: rgb(254, 239, 195);
+}

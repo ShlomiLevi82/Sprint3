@@ -1,0 +1,4 @@
+.note-main-layout{
+    display: flex;
+    flex-direction: row;
+}
