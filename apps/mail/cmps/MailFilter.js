@@ -16,42 +16,43 @@ export default {
     </section>
 
     <div class="mail-index">
-    <section class="mail-manu">
-        <div class="compose" @click.stop="toggleCompose">
-            <span class="btn material-icons-outlined"
+        <section class="mail-manu">
+            <div class="compose" @click.stop="toggleCompose">
+                <span class="btn material-icons-outlined"
                 >
-                add
-            </span>Compose
-        </div>
-        
-        <div class="inbox">
-            <span class="material-icons-outlined">
-                inbox
-            </span> Inbox
-        </div>
-        <div class="star">          
-            <span class="material-icons-outlined star">
-                star_outline
-            </span> Starred 
-        </div>
-        <div class="sent">
-            <span class="material-icons-outlined">
-                send
-            </span>Sent
-        </div>
-        <div class="draft">
-            <span class="material-icons-outlined">
-            insert_drive_file
-            </span>Draft
-        </div>
-        <div class="trash">
-            <span class="material-icons-outlined">
-            delete_outline
-            </span>Trash
-        </div>
-    </section >
-        <section class="mail-index"> 
+                    create
+                </span>Compose
+            </div>
+
+            <div class="inbox">
+                <span class="material-icons-outlined">
+                    inbox
+                </span> Inbox
+            </div>
+            <div class="star">          
+                <span class="material-icons-outlined star">
+                    star_outline
+                </span> Starred 
+            </div>
+            <div class="sent">
+                <span class="material-icons-outlined">
+                    send
+                </span>Sent
+            </div>
+            <div class="draft">
+                <span class="material-icons-outlined">
+                insert_drive_file
+                </span>Draft
+            </div>
+            <div class="trash">
+                <span class="material-icons-outlined">
+                delete_outline
+                </span>Trash
+            </div>
             <Mailcompose @send="sendMail" v-if="showCompose"/>
+        </section >       
+            
+            
         `,
 
   data() {

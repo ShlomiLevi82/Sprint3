@@ -4,6 +4,7 @@ import MailFilter from '../cmps/MailFilter.js'
 import { mailservice } from '../services/mail.service.js'
 
 export default {
+  props: ['mail'],
   template: `
             
             <MailFilter @filter="setFilterBy">         
@@ -40,14 +41,14 @@ export default {
       this.filterBy = filterBy
     },
 
-    markAsRead(emailId) {
+    markAsRead(mailId) {
       console.log('mark as read')
       mailservice
-        .get(emailId)
-        .then((email) => {
-          if (!email.isRead) {
-            email.isRead = true
-            return mailservice.save(email)
+        .get(mailId)
+        .then((mail) => {
+          if (!mail.isRead) {
+            mail.isRead = true
+            return mailservice.save(mail)
           }
         })
         .then((savedEmail) => {

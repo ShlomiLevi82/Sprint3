@@ -1,0 +1,22 @@
+.mail-compos-container {
+  border: 1px solid #000;
+}
+.mail-compos-container h1 {
+  background-color: #e7e7e8;
+}
+
+.compose-mail {
+  display: grid;
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  border-radius: 10px;
+}
+
+.compose-mail .btn-submit {
+  width: 105px;
+  height: 35px;
+  border-radius: 50px;
+  color: azure;
+  background-color: #0b57d0;
+}

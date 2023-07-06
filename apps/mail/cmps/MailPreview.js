@@ -3,11 +3,13 @@ export default {
   template: `
 
 <RouterLink :to="'/mail/' + mail.id">
-    <section class="mail-preview ">  
-        <span class="icons" @click.stop="onToggleStar">{{ mail.isStarred ? '★' : '☆' }}</span>
-        <!-- <span class="material-icons-outlined star">
-            star_outline
-        </span>         -->
+    <section :class="{'mail-preview': true,
+                      'unread-mail': !mail.isRead,
+                      'read-mail': mail.isRead}">
+        <span class="icons"
+          @click.stop.prevent="onToggleStar">
+          {{ mail.isStarred ? '★' : '☆' }}
+        </span>
         <h4>
             {{mail.from}}
         </h4>
@@ -17,18 +19,13 @@ export default {
         <p>
             {{getDate}}
         </p>
-        <!-- <section class = "icons">
-            <span class="material-icons-outlined" 
-            @click.stop="onRemoveMail(mail.id)" >
+        <div class="actions">
+          <span class="material-icons-outlined" >archive</span>
+          <span class="material-icons-outlined" 
+                @click.stop.prevent="onRemoveMail(mail.id)">
                 delete
-            </span>
-            <span class="material-icons-outlined">
-                drafts
-            </span>
-            <span class="material-icons-outlined">
-                archive
-            </span> 
-        </section> -->
+          </span>
+          </div>
     </section> 
 </RouterLink> 
 

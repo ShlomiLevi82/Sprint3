@@ -6,6 +6,10 @@ const TRASH_MAILS = 'TrashMail'
 const SHRAE_MAIL = 'shareMailDB'
 const DRAFT_MAIL = 'draftMailDB'
 
+var gFilterBy = { txt: '', minPrice: 0 }
+var gSortBy = { title: 1 }
+var gPageIdx
+
 //Demo Data
 
 const loggedinUser = {
@@ -20,7 +24,7 @@ const emails = [
       '[Slack] New message in group conversation with Roni Siles and Guy Kadosh - Coding Academy',
     body: 'You have a new mention in Coding Academy - Sep22 (fullstackboot-keg9179.slack.com) From your conversation with Roni Siles and Guy Kadosh - Coding Academy',
     status: 'inbox',
-    isRead: false,
+    isRead: true,
     isStarred: false,
     isImportant: false,
     sentAt: 1667999864557,
@@ -44,7 +48,7 @@ const emails = [
     subject: 'rorokoo invited you to rorokoo/sprint3',
     body: '@rorokoo has invited you to collaborate on the rorokoo/sprint3 repository. You can accept or decline this invitation. You can also head over to https://github.com/rorokoo/sprint3 to check out the repository or visit @rorokoo to learn a bit more about them. This invitation will expire in 7 days.',
     status: 'inbox',
-    isRead: false,
+    isRead: true,
     isStarred: true,
     isImportant: true,
     sentAt: 1667999330000,
@@ -227,17 +231,19 @@ export const mailservice = {
 }
 
 function query(filterBy = {}) {
-  return storageService.query(MAILS_KEY).then((Mails) => {
-    let onlyUserMails = Mails.filter((mail) => mail.from !== 'user@appsus.com')
-    if (filterBy.txt) {
-      const regex = new RegExp(filterBy.txt, 'i')
-      return onlyUserMails.filter((mail) => regex.test(mail.body))
+  return storageService.query(MAILS_KEY).then((emails) => {
+    if (gFilterBy.txt) {
+      const regex = new RegExp(gFilterBy.txt, 'i')
+      emails = emails.filter((email) => regex.test(email.title))
     }
-    if (filterBy.isStared) {
-      return onlyUserMails.filter((mail) => mail.isStared)
-    } else {
-      return onlyUserMails
+    if (gFilterBy.minPrice) {
+      emails = emails.filter((email) => email.listPrice >= gFilterBy.minPrice)
     }
+    if (gPageIdx !== undefined) {
+      const startIdx = gPageIdx * PAGE_SIZE
+      emails = emails.slice(startIdx, startIdx + PAGE_SIZE)
+    }
+    return emails
   })
 }
 
