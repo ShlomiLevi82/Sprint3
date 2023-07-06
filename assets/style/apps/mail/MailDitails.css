@@ -1,0 +1,28 @@
+.wrapper {
+  display: flex;
+  gap: 1em;
+}
+
+.mail-main-section {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+}
+
+.mail-links-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  max-width: 280px;
+}
+
+.mail-details {
+  padding: 0.5em;
+  border: 1px solid #2c2c2c;
+  border-radius: 10px;
+  margin-inline-end: 1em;
+}
+
+.mail-body {
+  background-color: #f5f5f5;
+}

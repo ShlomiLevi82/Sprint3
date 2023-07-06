@@ -11,19 +11,22 @@ import { mailservice } from '../services/mail.service.js'
 export default {
   props: ['mail'],
   template: `
-           <section class="main-filter">   
-    <MailFilter 
-      @filter="setFilterBy">         
-    </MailFilter> 
-</section>
- <section class="main-layout">               
-   <MailList 
-   v-if="mails"
-   :mails="getMails"
-   @markAsRead="markAsRead"
-   @remove="removeMail">
-  </MailList> 
-</section>
+  
+  <div class="main-wrapper">  
+    <section class="main-filter">   
+      <MailFilter 
+        @filter="setFilterBy">         
+      </MailFilter> 
+    </section>
+    <section class="main-layout">               
+      <MailList 
+        v-if="mails"
+        :mails="getMails"
+        @markAsRead="markAsRead"
+        @remove="removeMail">
+      </MailList> 
+    </section>
+  </div>
   `,
 
   data() {

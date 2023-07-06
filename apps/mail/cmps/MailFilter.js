@@ -2,46 +2,41 @@ import Mailcompose from './MailCompose.js'
 
 export default {
   template: `
-<section class="mail-index-header">
-        <h1>Mail</h1>
+  <div class="mail-index">
+<section class="mail-index-header">        
         <input               
             type="text"
             placeholder="Search "
             v-model="filterBy.txt"
-            @input="onSetFilterBy"/>
-        <button>Search</button> 
+            @input="onSetFilterBy"/>        
     </section>
-
-    <div class="mail-index">
         <section class="mail-manu">
             <div class="compose" @click.stop="toggleCompose">
-                <span class="btn material-icons-outlined"
-                >
+                <span class="btn material-icons-outlined">
                     create
                 </span>Compose
             </div>
-
-            <div class="inbox">
+            <div class="inbox icon">
                 <span class="material-icons-outlined">
                     inbox
                 </span> Inbox
             </div>
-            <div class="star">          
+            <div class="star icon">          
                 <span class="material-icons-outlined star">
                     star_outline
                 </span> Starred 
             </div>
-            <div class="sent">
+            <div class="sent icon">
                 <span class="material-icons-outlined">
                     send
                 </span>Sent
             </div>
-            <div class="draft">
+            <div class="draft icon">
                 <span class="material-icons-outlined">
                 insert_drive_file
                 </span>Draft
             </div>
-            <div class="trash">
+            <div class="trash icon">
                 <span class="material-icons-outlined">
                 delete_outline
                 </span>Trash
