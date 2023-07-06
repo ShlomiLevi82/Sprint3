@@ -1,0 +1,39 @@
+.mail-index .mail-index-header input {
+  width: 142px;
+  margin-inline-start: 10px;
+  margin-block-end: 5px;
+}
+
+.mail-index-header {
+  display: flex;
+
+  gap: 1em;
+}
+
+.mail-manu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1em;
+  padding: 0 0 0 8px;
+  width: fit-content;
+}
+
+.mail-index .mail-manu .compose {
+  display: flex;
+  align-items: center;
+  border: 1px solid #c2c2c2;
+  width: 142px;
+  height: 55px;
+  border-radius: 15px;
+  box-shadow: 1px 1px 2px #c2c2c2;
+  cursor: pointer;
+}
+
+.mail-index .mail-manu .compose:hover {
+  background-color: #ece2e2;
+}
+
+.main-wrapper {
+  display: flex;
+}

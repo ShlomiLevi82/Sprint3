@@ -2,25 +2,21 @@ import Mailcompose from './MailCompose.js'
 
 export default {
   template: `
-<section class="mail-index-header">
-        <h1>Mail</h1>
+  <div class="mail-index">
+<section class="mail-index-header">        
         <input               
             type="text"
             placeholder="Search "
             v-model="filterBy.txt"
             @input="onSetFilterBy"/>
-        <button>Search</button> 
+        
     </section>
-
-    <div class="mail-index">
         <section class="mail-manu">
             <div class="compose" @click.stop="toggleCompose">
-                <span class="btn material-icons-outlined"
-                >
+                <span class="btn material-icons-outlined">
                     create
                 </span>Compose
             </div>
-
             <div class="inbox">
                 <span class="material-icons-outlined">
                     inbox
