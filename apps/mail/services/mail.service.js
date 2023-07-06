@@ -6,6 +6,10 @@ const TRASH_MAILS = 'TrashMail'
 const SHRAE_MAIL = 'shareMailDB'
 const DRAFT_MAIL = 'draftMailDB'
 
+var gFilterBy = { txt: '', minPrice: 0 }
+var gSortBy = { title: 1 }
+var gPageIdx
+
 //Demo Data
 
 const loggedinUser = {
@@ -20,7 +24,7 @@ const emails = [
       '[Slack] New message in group conversation with Roni Siles and Guy Kadosh - Coding Academy',
     body: 'You have a new mention in Coding Academy - Sep22 (fullstackboot-keg9179.slack.com) From your conversation with Roni Siles and Guy Kadosh - Coding Academy',
     status: 'inbox',
-    isRead: false,
+    isRead: true,
     isStarred: false,
     isImportant: false,
     sentAt: 1667999864557,
@@ -44,7 +48,7 @@ const emails = [
     subject: 'rorokoo invited you to rorokoo/sprint3',
     body: '@rorokoo has invited you to collaborate on the rorokoo/sprint3 repository. You can accept or decline this invitation. You can also head over to https://github.com/rorokoo/sprint3 to check out the repository or visit @rorokoo to learn a bit more about them. This invitation will expire in 7 days.',
     status: 'inbox',
-    isRead: false,
+    isRead: true,
     isStarred: true,
     isImportant: true,
     sentAt: 1667999330000,
@@ -227,17 +231,19 @@ export const mailservice = {
 }
 
 function query(filterBy = {}) {
-  return storageService.query(MAILS_KEY).then((Mails) => {
-    let onlyUserMails = Mails.filter((mail) => mail.from !== 'user@appsus.com')
-    if (filterBy.txt) {
-      const regex = new RegExp(filterBy.txt, 'i')
-      return onlyUserMails.filter((mail) => regex.test(mail.body))
+  return storageService.query(MAILS_KEY).then((mails) => {
+    if (gFilterBy.txt) {
+      const regex = new RegExp(gFilterBy.txt, 'i')
+      mails = mails.filter((mail) => regex.test(mail.title))
     }
-    if (filterBy.isStared) {
-      return onlyUserMails.filter((mail) => mail.isStared)
-    } else {
-      return onlyUserMails
+    if (gFilterBy.minPrice) {
+      mails = mails.filter((mail) => mail.listPrice >= gFilterBy.minPrice)
     }
+    if (gPageIdx !== undefined) {
+      const startIdx = gPageIdx * PAGE_SIZE
+      mails = mails.slice(startIdx, startIdx + PAGE_SIZE)
+    }
+    return mails
   })
 }
 
@@ -357,7 +363,7 @@ function getEmptyMail() {
 function _createMails() {
   let Mails = utilService.loadFromStorage(MAILS_KEY)
   if (!Mails || !Mails.length) {
-    Mails = emails
+    Mails = generateRandomEmails(20)
     utilService.saveToStorage(MAILS_KEY, Mails)
   }
 }
@@ -398,33 +404,6 @@ function createMail(to, subject, body, mailIsDraft) {
   return save(Mail)
 }
 
-function addReview(MailId, review) {
-  const newReview = JSON.parse(JSON.stringify(review))
-  return storageService
-    .get(MAILS_KEY, MailId)
-    .then((Mail) => {
-      newReview.id = utilService.makeId()
-      if (!Mail.newReview) {
-        Mail.newReview = []
-      }
-      Mail.newReview.push(newReview)
-
-      return Mail
-    })
-    .then((Mail) => save(Mail))
-}
-
-function deleteReview(reviewId, MailId) {
-  return storageService
-    .get(MAILS_KEY, MailId)
-    .then((Mail) => {
-      const idx = Mail.newReview.findIndex((review) => review.id === reviewId)
-      Mail.newReview.splice(idx, 1)
-      return Mail
-    })
-    .then((Mail) => save(Mail))
-}
-
 function _setNextPrevMailId(Mail) {
   return storageService.query(MAILS_KEY).then((Mails) => {
     const MailIdx = Mails.findIndex((currMail) => currMail.id === Mail.id)
@@ -435,3 +414,25 @@ function _setNextPrevMailId(Mail) {
     return Mail
   })
 }
+
+function generateRandomEmails(n) {
+  let time = new Date().getTime() - Math.random() * 1000
+  let mails = []
+  for (let i = 0; i < n; i++) {
+    let mail = {}
+    mail.id = `e${i + 1}`
+    mail.subject = `Random Email Subject ${i + 1}`
+    mail.status = 'inbox'
+    mail.isRead = Math.random() >= 0.5
+    mail.isStarred = Math.random() >= 0.5
+    mail.isImportant = Math.random() >= 0.5
+    mail.sentAt = time - i
+    mail.from = `sender_${i + 1}@example.com`
+    mail.to = `recipient_${i + 1}@example.com`
+    mails.push(mail)
+  }
+  return mails
+}
+
+let mails = generateRandomEmails(20)
+console.log(mails)

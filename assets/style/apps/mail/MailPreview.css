@@ -3,17 +3,51 @@
   grid-template-columns: 50px 200px 1fr 100px;
   align-items: center;
   justify-content: space-around;
-  border: 1px solid #c2c2c2;
-}
-
-.mail-preview .star {
-  cursor: pointer;
+  box-shadow: inset 0 -1px 0 0 rgba(100, 121, 143, 0.122);
 }
 
 .mail-preview:hover {
-  box-shadow: 1px 1px 8px 0px;
+  box-shadow: inset 1px 0 0 #dadce0, inset -1px 0 0 #dadce0,
+    0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
 }
 
-.read {
-  background-color: #c4bcba;
+.mail-preview h4 {
+  font-family: Roboto, sans-serif;
+  font-size: 0.875rem;
+  text-overflow: ellipsis;
+  text-align: left;
+  white-space: nowrap;
+  overflow-x: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.actions {
+  display: none;
+}
+
+.mail-preview:hover {
+  box-shadow: inset 2px 0 0 #dadce0, inset -2px 0 0 #dadce0,
+    0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+}
+
+.mail-preview:hover .actions {
+  position: absolute;
+  display: flex;
+  gap: 15px;
+  right: 30%;
+  width: 30px;
+}
+
+.actions span:hover {
+  background-color: lightgray;
+  border-radius: 100%;
+}
+.unread-mail {
+  color: var(--clr5);
+}
+
+.read-mail {
+  background-color: var(--clr2);
+  color: #6f6f71;
 }

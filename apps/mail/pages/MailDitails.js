@@ -6,7 +6,8 @@ export default {
   template: `
 
         <MailFilter> </MailFilter>
-
+        <RouterLink :to="'/mail/' + mail.nextMailId">Next Mail</RouterLink> |
+        <RouterLink :to="'/mail/' + mail.prevMailId">Prev Mail</RouterLink> 
         <RouterLink to="/mail">Back to List</RouterLink>            
         <section v-if="mail"  class="mail-details">
 
