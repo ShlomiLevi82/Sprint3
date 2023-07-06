@@ -4,9 +4,10 @@ export default {
 
 <RouterLink :to="'/mail/' + mail.id">
     <section class="mail-preview ">  
-        <span class="material-icons-outlined star">
+        <span class="icons" @click.stop="onToggleStar">{{ mail.isStarred ? '★' : '☆' }}</span>
+        <!-- <span class="material-icons-outlined star">
             star_outline
-        </span>        
+        </span>         -->
         <h4>
             {{mail.from}}
         </h4>
@@ -51,6 +52,10 @@ export default {
     },
   },
   methods: {
+    onToggleStar() {
+      this.mail.isStarred = !this.mail.isStarred
+      this.$emit('starred', this.mail)
+    },
     onRemoveMail(mailId) {
       console.log('mailId', mailId)
       this.$emit('remove', mailId)

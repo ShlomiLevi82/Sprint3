@@ -17,9 +17,9 @@ export default {
 
     <div class="mail-index">
     <section class="mail-manu">
-        <div class="compose">
+        <div class="compose" @click.stop="toggleCompose">
             <span class="btn material-icons-outlined"
-                @click="toggleCompose">
+                >
                 add
             </span>Compose
         </div>
@@ -29,7 +29,7 @@ export default {
                 inbox
             </span> Inbox
         </div>
-        <div class="star">
+        <div class="star">          
             <span class="material-icons-outlined star">
                 star_outline
             </span> Starred 
@@ -70,7 +70,7 @@ export default {
     },
 
     toggleCompose() {
-      console.log('showCompose', showCompose)
+      console.log('showCompose', this.showCompose)
       this.showCompose = !this.showCompose
     },
   },

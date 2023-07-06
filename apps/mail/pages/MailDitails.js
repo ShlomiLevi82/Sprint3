@@ -1,4 +1,4 @@
-import { mailService } from '../services/mail.service.js'
+import { mailservice } from '../services/mail.service.js'
 import MailFilter from '../cmps/MailFilter.js'
 
 export default {
@@ -31,7 +31,7 @@ export default {
     loadMail() {
       const { mailId } = this.$route.params
       console.log('mailId..', mailId)
-      mailService
+      mailservice
         .get(mailId)
         .then((mail) => {
           console.log('mail', mail)
