@@ -231,19 +231,19 @@ export const mailservice = {
 }
 
 function query(filterBy = {}) {
-  return storageService.query(MAILS_KEY).then((emails) => {
+  return storageService.query(MAILS_KEY).then((mails) => {
     if (gFilterBy.txt) {
       const regex = new RegExp(gFilterBy.txt, 'i')
-      emails = emails.filter((email) => regex.test(email.title))
+      mails = mails.filter((mail) => regex.test(mail.title))
     }
     if (gFilterBy.minPrice) {
-      emails = emails.filter((email) => email.listPrice >= gFilterBy.minPrice)
+      mails = mails.filter((mail) => mail.listPrice >= gFilterBy.minPrice)
     }
     if (gPageIdx !== undefined) {
       const startIdx = gPageIdx * PAGE_SIZE
-      emails = emails.slice(startIdx, startIdx + PAGE_SIZE)
+      mails = mails.slice(startIdx, startIdx + PAGE_SIZE)
     }
-    return emails
+    return mails
   })
 }
 
@@ -363,7 +363,7 @@ function getEmptyMail() {
 function _createMails() {
   let Mails = utilService.loadFromStorage(MAILS_KEY)
   if (!Mails || !Mails.length) {
-    Mails = emails
+    Mails = generateRandomEmails(20)
     utilService.saveToStorage(MAILS_KEY, Mails)
   }
 }
@@ -404,33 +404,6 @@ function createMail(to, subject, body, mailIsDraft) {
   return save(Mail)
 }
 
-function addReview(MailId, review) {
-  const newReview = JSON.parse(JSON.stringify(review))
-  return storageService
-    .get(MAILS_KEY, MailId)
-    .then((Mail) => {
-      newReview.id = utilService.makeId()
-      if (!Mail.newReview) {
-        Mail.newReview = []
-      }
-      Mail.newReview.push(newReview)
-
-      return Mail
-    })
-    .then((Mail) => save(Mail))
-}
-
-function deleteReview(reviewId, MailId) {
-  return storageService
-    .get(MAILS_KEY, MailId)
-    .then((Mail) => {
-      const idx = Mail.newReview.findIndex((review) => review.id === reviewId)
-      Mail.newReview.splice(idx, 1)
-      return Mail
-    })
-    .then((Mail) => save(Mail))
-}
-
 function _setNextPrevMailId(Mail) {
   return storageService.query(MAILS_KEY).then((Mails) => {
     const MailIdx = Mails.findIndex((currMail) => currMail.id === Mail.id)
@@ -441,3 +414,25 @@ function _setNextPrevMailId(Mail) {
     return Mail
   })
 }
+
+function generateRandomEmails(n) {
+  let time = new Date().getTime() - Math.random() * 1000
+  let mails = []
+  for (let i = 0; i < n; i++) {
+    let mail = {}
+    mail.id = `e${i + 1}`
+    mail.subject = `Random Email Subject ${i + 1}`
+    mail.status = 'inbox'
+    mail.isRead = Math.random() >= 0.5
+    mail.isStarred = Math.random() >= 0.5
+    mail.isImportant = Math.random() >= 0.5
+    mail.sentAt = time - i
+    mail.from = `sender_${i + 1}@example.com`
+    mail.to = `recipient_${i + 1}@example.com`
+    mails.push(mail)
+  }
+  return mails
+}
+
+let mails = generateRandomEmails(20)
+console.log(mails)

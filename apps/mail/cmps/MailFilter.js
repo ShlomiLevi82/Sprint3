@@ -2,9 +2,6 @@ import Mailcompose from './MailCompose.js'
 
 export default {
   template: `
-
-  
-
 <section class="mail-index-header">
         <h1>Mail</h1>
         <input               
@@ -49,9 +46,9 @@ export default {
                 delete_outline
                 </span>Trash
             </div>
-            <Mailcompose @send="sendMail" v-if="showCompose"/>
         </section >       
-            
+        <Mailcompose @send="sendMail" v-if="showCompose"/>
+      </div>
             
         `,
 

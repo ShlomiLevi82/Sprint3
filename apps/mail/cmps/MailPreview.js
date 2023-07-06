@@ -1,3 +1,9 @@
+import { mailservice } from '../services/mail.service.js'
+import {
+  showSuccessMsg,
+  showErrorMsg,
+} from '../../../services/event-bus.service.js'
+
 export default {
   props: ['mail'],
   template: `
@@ -54,7 +60,6 @@ export default {
       this.$emit('starred', this.mail)
     },
     onRemoveMail(mailId) {
-      console.log('mailId', mailId)
       this.$emit('remove', mailId)
     },
   },

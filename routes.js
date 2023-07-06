@@ -23,11 +23,18 @@ const routerOptions = {
     {
       path: '/mail',
       component: MailIndex,
+      // children: [
+      //   {
+      //     path: '/mail/:mailId',
+      //     component: MailDitails,
+      //   },
+      // ],
     },
     {
       path: '/mail/:mailId',
       component: MailDitails,
     },
+
     {
       path: '/notes',
       component: NoteIndex,

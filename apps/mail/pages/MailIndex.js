@@ -1,23 +1,29 @@
 import MailList from '../cmps/MailList.js'
 import MailFilter from '../cmps/MailFilter.js'
+import MailPreview from '../cmps/MailPreview.js'
 
+import {
+  showSuccessMsg,
+  showErrorMsg,
+} from '../../../services/event-bus.service.js'
 import { mailservice } from '../services/mail.service.js'
 
 export default {
   props: ['mail'],
   template: `
-            
-            <MailFilter @filter="setFilterBy">         
-            </MailFilter>              
-
-            <MailList 
-                v-if="mails"
-                :mails="getMails"
-                @markAsRead="markAsRead">
-            </MailList>           
-        </section>
-        
-
+           <section class="main-filter">   
+    <MailFilter 
+      @filter="setFilterBy">         
+    </MailFilter> 
+</section>
+ <section class="main-layout">               
+   <MailList 
+   v-if="mails"
+   :mails="getMails"
+   @markAsRead="markAsRead"
+   @remove="removeMail">
+  </MailList> 
+</section>
   `,
 
   data() {
@@ -30,13 +36,27 @@ export default {
   created() {
     {
       mailservice.query().then((mails) => {
-        console.log('mails', mails)
         this.mails = mails
       })
     }
   },
 
   methods: {
+    removeMail(mailId) {
+      console.log('remove mailId', mailId)
+      mailservice
+        .remove(mailId)
+        .then((mail) => {
+          console.log('mail', mail)
+          const idx = this.mails.indexOf((mail) => mail.id === mailId)
+          this.mails.splics(idx, 1)
+          showSuccessMsg('Mail removed')
+        })
+        .catch((err) => {
+          showErrorMsg('Cannot remove mail')
+        })
+    },
+
     setFilterBy(filterBy) {
       this.filterBy = filterBy
     },
@@ -77,5 +97,6 @@ export default {
   components: {
     MailList,
     MailFilter,
+    MailPreview,
   },
 }

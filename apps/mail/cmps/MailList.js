@@ -11,13 +11,13 @@ export default {
                     @click="onShowDetails(mail.id)"
                     @click="onMarkAsRead(mail.id)" 
                     @checkbox-change="onCheckboxChange(mail)"
+                    @remove="$emit('remove',$event)"
             ></MailPreview>
 
           </li>
         </ul> 
       </section>
-
- `,
+  `,
 
   watch: {
     mails: {
@@ -26,19 +26,10 @@ export default {
     },
   },
   methods: {
-    onMarkAsRead(emailId) {
-      this.$emit('markAsRead', emailId)
+    onMarkAsRead(mailId) {
+      this.$emit('markAsRead', mailId)
     },
-    onCheckboxChange(emailId) {
-      console.log(emailId)
-      this.$emit('checkbox-change', emailId)
-    },
-    onRemoveEmail(emailId) {
-      this.$emit('remove', emailId)
-    },
-    onRemoveMAil(mailId) {
-      this.$emit('remove', mailId)
-    },
+
     onShowDetails(mailId) {
       console.log('mailId', mailId)
       this.$emit('select', mailId)

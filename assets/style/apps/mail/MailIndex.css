@@ -25,3 +25,7 @@
 .mail-index .mail-manu .compose:hover {
   background-color: #ece2e2;
 }
+
+.main-layout {
+  background-color: red;
+}
