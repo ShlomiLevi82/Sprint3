@@ -76,15 +76,42 @@ function save(note) {
   }
 }
 
-function getEmptyNote(type = "", txt = "") {
-  return {
-    id: "",
-    createdAt: utilService.getTime("notes"),
-    type: "NoteTxt",
-    isPinned: true,
-    style: { backgroundColor: "#0000d" },
-    info: { txt: "" },
-  };
+function getEmptyNote(noteType = "NoteTxt") {
+  if (noteType === "NoteTxt") {
+    return {
+      id: utilService.makeId(),
+      createdAt: utilService.getTime("notes"),
+      type: "NoteTxt",
+      isPinned: false,
+      style: { backgroundColor: "#0000d" },
+      info: { txt: "New note" },
+    };
+  } else if (noteType === "NoteImg")
+    return {
+      id: utilService.makeId(),
+      createdAt: utilService.getTime("notes"),
+      type: "NoteImg",
+      isPinned: true,
+      style: { backgroundColor: utilService.getRandomColor() },
+      info: { url: "", txt: "" },
+    };
+  else {
+    return {
+      id: utilService.makeId(),
+      createdAt: utilService.getTime("notes"),
+      type: "NoteTodos",
+      isPinned: true,
+      style: { backgroundColor: utilService.getRandomColor() },
+      info: {
+        txt: "Grocery List",
+        todos: [
+          { txt: "Apples", doneAt: null },
+          { txt: "Bread", doneAt: null },
+          { txt: "Milk", doneAt: 187111111 },
+        ],
+      },
+    };
+  }
 }
 
 function getFilterBy() {
@@ -132,6 +159,7 @@ function _createnotes() {
         style: { backgroundColor: utilService.getRandomColor() },
         info: { txt: "Fullstack Me Baby!" },
       },
+
       {
         id: utilService.makeId(),
         createdAt: utilService.getTime("notes"),
@@ -145,7 +173,7 @@ function _createnotes() {
         createdAt: utilService.getTime("notes"),
         type: "NoteTodos",
         isPinned: false,
-        style: {backgroundColor: utilService.getRandomColor()},
+        style: { backgroundColor: utilService.getRandomColor() },
         info: {
           txt: "Get my stuff together",
           todos: [
@@ -159,7 +187,7 @@ function _createnotes() {
         createdAt: utilService.getTime("notes"),
         type: "NoteTxt",
         isPinned: false,
-        style: {backgroundColor: utilService.getRandomColor()},
+        style: { backgroundColor: utilService.getRandomColor() },
         info: { txt: "Remember to buy milk" },
       },
       {
@@ -167,15 +195,15 @@ function _createnotes() {
         createdAt: utilService.getTime("notes"),
         type: "NoteImg",
         isPinned: true,
+        style: { backgroundColor: utilService.getRandomColor() },
         info: { url: "http://some-img/cats", txt: "Cute Cats" },
-        style: {backgroundColor: utilService.getRandomColor()},
       },
       {
         id: utilService.makeId(),
         createdAt: utilService.getTime("notes"),
         type: "NoteTodos",
         isPinned: true,
-        style: {backgroundColor: utilService.getRandomColor()},
+        style: { backgroundColor: utilService.getRandomColor() },
         info: {
           txt: "Grocery List",
           todos: [
@@ -190,7 +218,7 @@ function _createnotes() {
         createdAt: utilService.getTime("notes"),
         type: "NoteTxt",
         isPinned: false,
-        style: {backgroundColor: utilService.getRandomColor()},
+        style: { backgroundColor: utilService.getRandomColor() },
         info: { txt: "Meeting at 3 PM" },
       },
     ];
@@ -199,8 +227,8 @@ function _createnotes() {
   }
 }
 
-function _createnote(txt, noteType = 250) {
-  const note = getEmptyNote(txt, noteType);
+function _createnote() {
+  const note = getEmptyNote(noteType);
   note.id = utilService.makeId();
   return note;
 }

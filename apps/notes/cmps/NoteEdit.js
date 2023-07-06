@@ -1,27 +1,33 @@
 import { noteService } from "../services/note.service.js";
 
 export default {
-  template: `  <form @submit.prevent="save" class="note-edit">
-  <h1>{{ noteToEdit.id ? 'Edit' : 'Add' }} Note</h1>
-  <input v-model="noteToEdit.info.txt" type="text" placeholder="Write a note" />
-  <input v-model="noteToEdit.style.backgroundColor" type="color" />
+  template: `
+    <form @submit.prevent="save" class="note-edit">
+      <h1>{{ noteToEdit.id ? 'Edit' : 'Add' }} Note</h1>
+      <input v-model="noteToEdit.info.txt" type="text" placeholder="Write a note" />
+      <input v-model="noteToEdit.style.backgroundColor" type="color" />
 
-  <button :disabled="!isValid">Save</button>
-  <router-link to="/notes">Cancel</router-link>
-</form>
-     `,
-   data() {
-    return {
-      noteToEdit: {
-        info: {
-          txt: "",
-        },
-        style: {
-          backgroundColor: "#de7c7e",
-        },
+      <button :disabled="!isValid">Save</button>
+      <router-link to="/notes">Cancel</router-link>
+      <section>
+          <component :is="noteToEdit.type" :note="noteToEdit"></component>
+      </section>
+      <pre>{{noteToEdit}}</pre>
+    </form>
+  `,
+data() {
+  return {
+    noteToEdit: {
+      info: {
+        txt: "",
       },
-    };
-  },
+      style: {
+        backgroundColor: "#de7c7e",
+      },
+      type: "NoteTxt",
+    },
+  };
+},
   computed: {
     isValid() {
       return this.noteToEdit.info.txt.length > 0;
@@ -52,5 +58,4 @@ export default {
         });
     },
   },
-
 };

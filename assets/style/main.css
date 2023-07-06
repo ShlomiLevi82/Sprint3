@@ -25,3 +25,4 @@
 @import 'apps/notes/cmps/note-details.css';
 @import 'apps/notes/cmps/note-edit.css';
 @import 'apps/notes/cmps/note-filter.css';
+@import url('apps/notes/cmps/note-toolbar.css');

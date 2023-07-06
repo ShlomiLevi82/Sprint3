@@ -1,12 +1,19 @@
 .app-header {
-  background-color: var(--clr5);
-  color: var(--secondary-clr1);
+  display: flex;
+  align-items: center;
   padding: 1em;
 }
 
-@media(max-width: 720px) {
-  .app-header {
-    background-color: var(--clr3);
-    color: var(--secondary-clr2);
-  }
+.header-links {
+  display: flex;
+  justify-content: space-around;
+  width: 20em;
+  margin-left: auto;
+}
+
+.header-links a:hover{
+}
+
+.app-header h1 {
+  margin: 0;
 }

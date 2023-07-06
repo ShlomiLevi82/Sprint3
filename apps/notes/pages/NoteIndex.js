@@ -11,7 +11,7 @@ export default {
       <RouterLink to="/notes/editNote"><button>Add note</button></RouterLink>
       <section class="notes-index">
         <NoteFilter  @filter="setFilterBy" />
-        <NoteList  :notes="filteredNotes" @remove="removeNote"/>
+        <NoteList  :notes="filteredNotes" />
 
       </section>
     </section>
@@ -38,15 +38,7 @@ export default {
     setFilterBy(filterBy) {
       this.filterBy = filterBy;
     },
-    test(){
-      console.log('a');
-    },
-    removeNote(noteId) {
-      noteService.remove(noteId).then(() => {
-        const idx = this.notes.findIndex((note) => note.id === noteId);
-        this.notes.splice(idx, 1);
-      });
-    },
+
   },
   components: {
     NoteList,
