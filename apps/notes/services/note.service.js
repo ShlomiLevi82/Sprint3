@@ -165,7 +165,7 @@ function _createnotes() {
         createdAt: utilService.getTime("notes"),
         type: "NoteImg",
         isPinned: false,
-        info: { url: "http://some-img/me", txt: "Bobi and Me" },
+        info: { url: "https://st2.depositphotos.com/1985863/5750/v/600/depositphotos_57501923-stock-illustration-astronaut.jpg", txt: "Bobi and Me" },
         style: { backgroundColor: utilService.getRandomColor() },
       },
       {
@@ -196,7 +196,7 @@ function _createnotes() {
         type: "NoteImg",
         isPinned: true,
         style: { backgroundColor: utilService.getRandomColor() },
-        info: { url: "http://some-img/cats", txt: "Cute Cats" },
+        info: { url: "https://st.depositphotos.com/1720162/1336/i/600/depositphotos_13367902-stock-photo-magical-world-of-painting.jpg", txt: "Cute Cats" },
       },
       {
         id: utilService.makeId(),

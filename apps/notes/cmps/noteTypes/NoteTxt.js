@@ -1,12 +1,8 @@
 export default {
-  props: ["note"],
+  props: ["info"],
   template: `
-      <div>
-    <input v-model="note.info.txt" type="text" placeholder="Write a note" />
-    <input v-model="note.style.backgroundColor" type="color" />
-  </div>
+    <div>      
+      <div>{{info.txt}}</div>
+    </div>
   `,
-  create(){
-    console.log(note);
-  }
 };

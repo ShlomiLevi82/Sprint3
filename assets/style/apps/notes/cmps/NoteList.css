@@ -10,31 +10,40 @@
   flex-direction: column;
   align-content: center;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
   flex-wrap: wrap;
 
   width: 238px;
   min-height: 10em;
   margin-bottom: 0.75em;
   break-inside: avoid-column;
-  background-color: var(--air-force-blue);
 
-  /* margin-bottom: 20px; */
   border-radius: 8px;
   border: 1px solid rgb(94, 57, 57);
 
   cursor: pointer;
 
   transition: transform 0.3s ease-in-out;
+
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.note-toolbar{
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.note-list ul li:hover .note-toolbar{
+  opacity: 1;
 }
 
 
-.note-list li h1 {
+
+.note-list li h2 {
   text-align: center;
-  margin-top: 0;
-  font-size: 15px;
-  height: 2.3em;
-  margin-bottom: 50px;
+  margin-top: 0.3em;
+
 }
 .note-preview {
   width: inherit;

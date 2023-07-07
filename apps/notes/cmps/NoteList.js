@@ -1,37 +1,44 @@
 import { noteService } from "../services/note.service.js";
 import NotePreview from "./NotePreview.js";
 import NoteToolbar from "./NoteToolbar.js";
+import NoteModal from "./NoteModal.js";
 
 export default {
   props: ["notes"],
+  data() {
+    return {
+      isModalOpen: false,
+      selectedNoteId: null
+    };
+  },
   template: `
     <section class="note-list">
       <transition-group name="list" tag="ul">
-        <li v-for="note in notes" :key="note.id" :style="note.style" @click="clickHandler(note.id)" >
+        <li v-for="note in notes" :key="note.id" :style="note.style" @click="openModal(note.id)">
           <NotePreview :note="note" />
-          <section class="tool-bar-container">
-            <NoteToolbar :note="note" 
-            @remove="removeNote"/>
-          </section>
+          <NoteToolbar :note="note" :notes="notes" />
         </li>
       </transition-group>
+      <NoteModal v-if="isModalOpen" :note="note" @closeModal="closeModal" />
     </section>
   `,
 
   methods: {
-    clickHandler(noteId) {
-      this.$router.push("/notes/editNote/" + noteId);
+    openModal(noteId) {
+      this.selectedNoteId = noteId;
+      this.isModalOpen = true;
     },
-    removeNote(noteId) {
-      noteService.remove(noteId).then(() => {
-        const idx = this.notes.findIndex((note) => note.id === noteId);
-        this.notes.splice(idx, 1);
-      });
+    closeModal() {
+      this.isModalOpen = false;
     },
   },
+
+
+
   components: {
     NotePreview,
     NoteToolbar,
+    NoteModal,
   },
   name: "NoteList",
 };

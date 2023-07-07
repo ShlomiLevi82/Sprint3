@@ -1,57 +1,26 @@
+import { noteService } from "../services/note.service.js";
+import NoteDelete from "./noteToolbar/NoteDelete.js";
+import NoteColor from "./noteToolbar/NoteColor.js";
 export default {
-  props: ["note"],
+  props: ["note", "notes"],
   template: `
-    <section className="tool-bar-icons">
-            <span class="material-icons-outlined" @click.stop="onRemoveNote(note.id)">
-                  delete
-            </span>
-            <span class="material-icons-outlined" @click.stop="">
-                color_lens
-            </span>
-            </section>
-    
+    <div className="note-toolbar">
+
+            <NoteDelete :note="note" @remove="removeNote"/>
+            <NoteColor :note="note"/>
+            
+            </div>
     `,
-  data() {
-    return {
-      noteToEdit: {
-        info: {
-          txt: "",
-        },
-        style: {
-          backgroundColor: "#de7c7e",
-        },
-      },
-    };
-  },
-  created() {
-    const { noteId } = this.$route.params;
-    if (!noteId) return;
-    noteService
-      .get(noteId)
-      .then((note) => {
-        this.noteToEdit = note;
-      })
-      .catch((err) => {
-        alert("Cannot load note");
-      });
-  },
-
   methods: {
-
-    onRemoveNote(noteId) {
-      this.$emit("remove", noteId);
+    removeNote(noteId) {
+      noteService.remove(noteId).then(() => {
+        const idx = this.notes.findIndex((note) => note.id === noteId);
+        this.notes.splice(idx, 1);
+      });
     },
-
-    save() {
-      noteService
-        .save(this.noteToEdit)
-        .then((savedNote) => {
-          this.$router.push("/notes");
-        })
-        .catch((err) => {
-          alert("Cannot load Book");
-          this.$router.push("/notes");
-        });
-    },
+  },
+  components: {
+    NoteDelete,
+    NoteColor,
   },
 };

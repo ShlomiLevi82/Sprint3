@@ -10,9 +10,7 @@ export default {
       <button :disabled="!isValid">Save</button>
       <router-link to="/notes">Cancel</router-link>
       <section>
-          <component :is="noteToEdit.type" :note="noteToEdit"></component>
       </section>
-      <pre>{{noteToEdit}}</pre>
     </form>
   `,
 data() {
