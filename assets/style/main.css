@@ -20,6 +20,7 @@
 @import 'apps/mail/MailCompose.css';
 @import 'apps/mail/MailFilter.css';
 @import 'apps/mail/MailDitails.css';
+@import 'apps/mail/MailSideMenue.css';
 
 /* Notes */
 @import 'apps/notes/cmps/NoteList.css';

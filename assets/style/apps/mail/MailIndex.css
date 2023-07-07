@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 .mail-index-header {
   display: flex;
 
@@ -26,5 +25,12 @@
 .mail-index .mail-manu .compose:hover {
   background-color: #ece2e2;
 }
-=======
->>>>>>> aaf7db8dd54689314086f4b5356fbd479760ade9
+.index-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.mail-list {
+  margin-block-start: 1em;
+  margin-inline-end: 1em;
+}

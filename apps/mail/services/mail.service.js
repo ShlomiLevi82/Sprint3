@@ -7,13 +7,11 @@ const SHRAE_MAIL = 'shareMailDB'
 const DRAFT_MAIL = 'draftMailDB'
 
 var gFilterBy = { txt: '', minPrice: 0 }
-var gSortBy = { title: 1 }
-var gPageIdx
 
 //Demo Data
 
 const loggedinUser = {
-  email: 'user@appsus.com',
+  mail: 'user@appsus.com',
   fullname: 'Mahatma Appsus',
 }
 
@@ -54,10 +52,10 @@ function query(filterBy = {}) {
     if (gFilterBy.minPrice) {
       mails = mails.filter((mail) => mail.listPrice >= gFilterBy.minPrice)
     }
-    if (gPageIdx !== undefined) {
-      const startIdx = gPageIdx * PAGE_SIZE
-      mails = mails.slice(startIdx, startIdx + PAGE_SIZE)
-    }
+    // if (gPageIdx !== undefined) {
+    //   const startIdx = gPageIdx * PAGE_SIZE
+    //   mails = mails.slice(startIdx, startIdx + PAGE_SIZE)
+    // }
     return mails
   })
 }
@@ -209,6 +207,7 @@ function createMail(to, subject, body, mailIsDraft) {
     isSelected: false,
     isStared: false,
     isImportant: false,
+    isTrashed: false,
     sentAt: Date.now(),
     removedAt: null,
     mailIsDraft,
@@ -231,7 +230,6 @@ function _setNextPrevMailId(Mail) {
 }
 
 function generateRandomEmails(n) {
-  let time = new Date().getTime() - Math.random() * 1000
   let mails = []
   for (let i = 0; i < n; i++) {
     let mail = {}
@@ -239,11 +237,13 @@ function generateRandomEmails(n) {
     mail.subject = `Random Email Subject ${i + 1}`
     mail.body =
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore laudantium quia explicabo natus reprehenderit a!'
+    ;('Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore laudantium quia explicabo natus reprehenderit a!')
     mail.status = 'inbox'
     mail.isRead = Math.random() >= 0.5
     mail.isStarred = Math.random() >= 0.5
     mail.isImportant = Math.random() >= 0.5
-    mail.sentAt = time - i
+    mail.isTrashed = Math.random() >= 0.5
+    mail.sentAt = _randomDate(new Date(2020, 0, 1), new Date(), 0, 24)
     mail.from = `sender_${i + 1}@example.com`
     mail.to = `recipient_${i + 1}@example.com`
     mails.push(mail)
@@ -253,3 +253,10 @@ function generateRandomEmails(n) {
 
 let mails = generateRandomEmails(20)
 console.log(mails)
+
+function _randomDate(start, end, startHour, endHour) {
+  var date = new Date(+start + Math.random() * (end - start))
+  var hour = (startHour + Math.random() * (endHour - startHour)) | 0
+  date.setHours(hour)
+  return date
+}

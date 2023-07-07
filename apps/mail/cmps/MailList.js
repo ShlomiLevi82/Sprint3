@@ -1,10 +1,11 @@
 import MailPreview from './MailPreview.js'
 
 export default {
+  name: 'MailList',
   props: ['mails'],
   template: `   
     <section class="mail-list">
-      <div class="mail-count">Unread Mails: {{ unreadEmailCount }}</div> 
+      <div class="mail-count" v-if="mails">Unread Mails: {{ unreadMailCount }}</div> 
         <ul class="clean-list">
           <li v-for="mail in mails" :key="mail.id">
             <MailPreview :mail="mail"
@@ -13,18 +14,11 @@ export default {
                     @checkbox-change="onCheckboxChange(mail)"
                     @remove="$emit('remove',$event)"
             ></MailPreview>
-
           </li>
         </ul> 
       </section>
   `,
 
-  watch: {
-    mails: {
-      immediate: true,
-      handler(mailList) {},
-    },
-  },
   methods: {
     onMarkAsRead(mailId) {
       this.$emit('markAsRead', mailId)
@@ -37,7 +31,8 @@ export default {
   },
 
   computed: {
-    unreadEmailCount() {
+    unreadMailCount() {
+      console.log('this.mails', this.mails)
       return this.mails.filter((mail) => !mail.isRead).length
     },
   },

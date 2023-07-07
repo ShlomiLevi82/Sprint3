@@ -1,0 +1,32 @@
+.mail-manu {
+  margin-block-start: 1em;
+  width: 100px;
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.mail-manu .compose {
+  border: 1px solid #000;
+  border-radius: 5em;
+  width: 7em;
+  height: 2.5em;
+  cursor: pointer;
+}
+
+.mail-manu .compose:hover {
+  background-color: rgb(242, 245, 246);
+}
+
+.mail-manu .icon {
+  cursor: pointer;
+}
+
+.mail-manu .icon:hover {
+  background-color: rgb(242, 245, 246);
+  border: 1px solid #000;
+  border-radius: 5em;
+  width: 7em;
+  height: 2.5em;
+}
