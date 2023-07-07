@@ -19,12 +19,6 @@ export default {
       </section>
   `,
 
-  watch: {
-    mails: {
-      immediate: true,
-      handler(mailList) {},
-    },
-  },
   methods: {
     onMarkAsRead(mailId) {
       this.$emit('markAsRead', mailId)

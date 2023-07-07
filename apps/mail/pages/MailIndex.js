@@ -68,16 +68,16 @@ export default {
     this.filterBy = filterBy
   },
   setFolder(folder) {
-    console.log('folder..', folder)
+    console.log('set folder', folder)
     this.folder = folder
   },
 
   computed: {
     filteredMails() {
       let filteredMails = this.mails
+      console.log('filteredMails', filteredMails)
       const regex = new RegExp(this.filterBy.txt, 'i')
       filteredMails = filteredMails.filter((mail) => regex.test(mail.subject))
-      console.log('filteredMails', filteredMails)
 
       switch (this.folder) {
         // case 'inbox':

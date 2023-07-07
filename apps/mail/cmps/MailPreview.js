@@ -1,9 +1,3 @@
-import { mailservice } from '../services/mail.service.js'
-import {
-  showSuccessMsg,
-  showErrorMsg,
-} from '../../../services/event-bus.service.js'
-
 export default {
   props: ['mail'],
   template: `
@@ -17,21 +11,26 @@ export default {
           {{ mail.isStarred ? '★' : '☆' }}
         </span>
         <h4>
-            {{mail.from}}
+            {{ mail.from }}
         </h4>
         <h4>
-            {{mail.subject}}
+            {{ mail.subject }}
+            
         </h4>
-        <p>
-            {{mail.sentAt}}
-        </p>
-        <div class="actions">
-          <!-- <span class="material-icons-outlined" >archive</span> -->
-          <span class="material-icons-outlined" 
+        <div class="toggle">
+
+          <p>
+            {{ getDate }}
+          </p>
+          <div class="actions">
+            <!-- <span class="material-icons-outlined" >archive</span> -->
+            <span class="material-icons-outlined" 
             @click.stop.prevent="onRemoveMail(mail)">delete</span>
-          <span class="material-icons-outlined" 
+            <span class="material-icons-outlined" 
             @click.stop.prevent="onToggleIsRead(mail)">{{ mail.isRead ? 'mail' : 'drafts' }}</span>
+          </div>
         </div>
+          
     </section> 
 </RouterLink> 
 
@@ -41,7 +40,17 @@ export default {
     return {}
   },
 
-  computed: {},
+  computed: {
+    getDate() {
+      const now = new Date()
+      const date = new Date(this.mail.sentAt)
+      const year = date.getFullYear()
+      const month = date.toLocaleString('default', { month: 'short' })
+
+      if (now.getFullYear() - year < 1) return year
+      else return month + ' ' + date.getDay()
+    },
+  },
   methods: {
     onToggleIsRead(mail) {
       mail.isRead = !mail.isRead

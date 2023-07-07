@@ -19,8 +19,9 @@
 .mail-details {
   padding: 0.5em;
   border: 1px solid #2c2c2c;
-  border-radius: 10px;
-  margin-inline-end: 1em;
+  border-radius: 15px;
+  margin-inline: 1em;
+  height: 80vh;
 }
 
 .mail-body {

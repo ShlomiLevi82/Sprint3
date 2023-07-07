@@ -237,6 +237,7 @@ function generateRandomEmails(n) {
     mail.subject = `Random Email Subject ${i + 1}`
     mail.body =
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore laudantium quia explicabo natus reprehenderit a!'
+    ;('Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore laudantium quia explicabo natus reprehenderit a!')
     mail.status = 'inbox'
     mail.isRead = Math.random() >= 0.5
     mail.isStarred = Math.random() >= 0.5

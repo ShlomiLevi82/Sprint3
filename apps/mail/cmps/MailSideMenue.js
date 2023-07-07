@@ -1,6 +1,7 @@
 import Mailcompose from './MailCompose.js'
 
 export default {
+  props: ['unreadMailsCount'],
   template: `
         <section class="mail-manu">
             <div class="compose" @click.stop="toggleCompose">
@@ -54,6 +55,7 @@ export default {
 
   methods: {
     selectFolder(folder) {
+      console.log('folder', folder)
       this.$emit('selectFolder', folder)
     },
     onSetFilterBy() {
