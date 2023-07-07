@@ -1,6 +1,8 @@
 export default {
+  name: 'EmailCompose',
+
   template: `
-    <div class="mail-compos-container"> 
+     <div class="mail-compos-container"> 
         <form @submit.prevent="onSendMail" class="compose-mail">
             <h1>New Message</h1>
             <label for="to"></label>
@@ -11,21 +13,11 @@ export default {
             <button class="btn-submit " type="submit">Send</button>
         </form>
     </div>
-    `,
-  data() {
-    return {
-      sendTo: null,
-      subject: null,
-      body: null,
-    }
-  },
+  `,
+
   methods: {
-    onSendMail() {
-      this.$emit('send', {
-        sendTo: this.sendTo,
-        subject: this.subject,
-        body: this.body,
-      })
+    onCloseCompose() {
+      console.log('close')
     },
   },
 }
