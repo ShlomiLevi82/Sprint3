@@ -1,4 +1,12 @@
+.todo-header {
+  text-align: center;
+  margin-top: 0.5em;
+}
+
 .note-img {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin-left: 5px;
   width: 95%;
 }

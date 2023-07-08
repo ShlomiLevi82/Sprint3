@@ -4,7 +4,7 @@ import { utilService } from "../../../services/util.service.js";
 const PAGE_SIZE = 5;
 const note_KEY = "noteDB";
 
-let gFilterBy = { txt: "", noteType: 0 };
+let gFilterBy = { txt: "", noteType: "" };
 let gSortBy = { txt: 1 };
 let gPageIdx;
 
@@ -79,7 +79,7 @@ function save(note) {
 function getEmptyNote(noteType = "NoteTxt") {
   if (noteType === "NoteTxt") {
     return {
-      id: utilService.makeId(),
+      id: '',
       createdAt: utilService.getTime("notes"),
       type: "NoteTxt",
       isPinned: false,
@@ -88,7 +88,7 @@ function getEmptyNote(noteType = "NoteTxt") {
     };
   } else if (noteType === "NoteImg")
     return {
-      id: utilService.makeId(),
+      id: "",
       createdAt: utilService.getTime("notes"),
       type: "NoteImg",
       isPinned: true,
@@ -97,7 +97,7 @@ function getEmptyNote(noteType = "NoteTxt") {
     };
   else {
     return {
-      id: utilService.makeId(),
+      id: "",
       createdAt: utilService.getTime("notes"),
       type: "NoteTodos",
       isPinned: true,
@@ -105,9 +105,9 @@ function getEmptyNote(noteType = "NoteTxt") {
       info: {
         txt: "Grocery List",
         todos: [
-          { txt: "Apples", doneAt: null },
-          { txt: "Bread", doneAt: null },
-          { txt: "Milk", doneAt: 187111111 },
+          { txt: "Apples", isDone: false },
+          { txt: "Bread", isDone: false },
+          { txt: "Milk", isDone: false },
         ],
       },
     };
@@ -177,8 +177,8 @@ function _createnotes() {
         info: {
           txt: "Get my stuff together",
           todos: [
-            { txt: "Driving license", doneAt: null },
-            { txt: "Coding power", doneAt: 187111111 },
+            { txt: "Driving license", isDone: false },
+            { txt: "Coding power", isDone: false },
           ],
         },
       },
@@ -207,9 +207,9 @@ function _createnotes() {
         info: {
           txt: "Grocery List",
           todos: [
-            { txt: "Apples", doneAt: null },
-            { txt: "Bread", doneAt: null },
-            { txt: "Milk", doneAt: 187111111 },
+            { txt: "Apples",isDone: false },
+            { txt: "Bread", isDone: false },
+            { txt: "Milk", isDone: false },
           ],
         },
       },

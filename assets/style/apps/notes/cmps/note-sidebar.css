@@ -1,9 +1,8 @@
 .note-sidebar {
   min-width: 280px;
-  /* height: 900px; */
 }
 
-.note-sidebar li {
+.note-sidebar > li {
   display: flex;
   list-style: none;
   font-family: "Google Sans", "Roboto", "Arial", sans-serif;

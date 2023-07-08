@@ -1,8 +1,11 @@
+
 export default {
-  props: ["info"],
+  props: ["info", "isEditNote"],
   template: `
     <div>      
-      <div>{{info.txt}}</div>
+      <h2 v-if="!isEditNote" class="todo-header">{{info.txt}}</h2>
+      <textarea class="line-break-textarea" v-if="isEditNote" v-model="info.txt"></textarea>
     </div>
   `,
+  
 };

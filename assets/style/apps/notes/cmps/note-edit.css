@@ -1,11 +1,39 @@
-.note-edit {
-    display: grid;
-    justify-items: start;
-    gap: 5px;
-    padding: 10px;
-    background-color: var(--rich-black);
+.edit-note {
+  display: block;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.2);
+  transition: opacity 2s;
+  opacity: 0;
+  animation: openEditNote 0.5s forwards;
 }
 
-.note-edit input {
-    padding: 0px;
+.edit-note-content {
+  opacity: 1;
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  max-width: fit-content;
+  min-height: 10em;
+  margin-bottom: 0.75em;
 }
+
+.edit-note-content > img{
+  width: 20%;
+}
+@keyframes openEditNote {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+

@@ -25,7 +25,6 @@
 /* Notes */
 @import 'apps/notes/cmps/NoteList.css';
 @import 'apps/notes/cmps/note-details.css';
-@import 'apps/notes/cmps/note-edit.css';
 @import 'apps/notes/cmps/note-filter.css';
 @import 'apps/notes/cmps/note-main.css';
 @import 'apps/notes/cmps/note-main-layout.css';
@@ -33,4 +32,5 @@
 @import 'apps/notes/cmps/note-toolbar.css';
 @import 'apps/notes/cmps/note-index.css';
 @import 'apps/notes/cmps/note-preview.css';
-@import 'apps/notes/cmps/note-modal.css';
+@import 'apps/notes/cmps/note-edit.css';
+@import 'apps/notes/cmps/note-todos.css';

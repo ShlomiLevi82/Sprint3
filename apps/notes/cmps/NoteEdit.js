@@ -1,59 +1,51 @@
+import NoteImg from "./noteTypes/NoteImg.js";
+import NoteTxt from "./noteTypes/NoteTxt.js";
+import NoteTodos from "./noteTypes/NoteTodos.js";
+
+import NoteToolbar from "./NoteToolbar.js";
 import { noteService } from "../services/note.service.js";
 
 export default {
+  props: ["note", "notes", "isEditNote"],
   template: `
-    <form @submit.prevent="save" class="note-edit">
-      <h1>{{ noteToEdit.id ? 'Edit' : 'Add' }} Note</h1>
-      <input v-model="noteToEdit.info.txt" type="text" placeholder="Write a note" />
-      <input v-model="noteToEdit.style.backgroundColor" type="color" />
-
-      <button :disabled="!isValid">Save</button>
-      <router-link to="/notes">Cancel</router-link>
-      <section>
-      </section>
-    </form>
+    <div> 
+      <div @click.self="toggleEditNote" class="edit-note">
+        <div class="edit-note-content">
+          <section>
+           <Component :is="note.type" :info="note.info" :notes="notes" :isEditNote="isEditNote" :key="note.id"></Component>
+           </section>
+        </div>
+      </div>
+      
+    </div>
   `,
-data() {
-  return {
-    noteToEdit: {
-      info: {
-        txt: "",
-      },
-      style: {
-        backgroundColor: "#de7c7e",
-      },
-      type: "NoteTxt",
-    },
-  };
-},
-  computed: {
-    isValid() {
-      return this.noteToEdit.info.txt.length > 0;
-    },
+  data() {
+    return {
+      noteToEdit: this.note,
+    };
   },
   created() {
-    const { noteId } = this.$route.params;
-    if (!noteId) return;
     noteService
-      .get(noteId)
+      .get(this.note.id)
       .then((note) => {
-        this.noteToEdit = note;
+        this.noteToEdit = this.note;
       })
       .catch((err) => {
-        alert("Cannot load note");
+        alert("Cannot load Note");
       });
   },
   methods: {
-    save() {
-      noteService
-        .save(this.noteToEdit)
-        .then((savedNote) => {
-          this.$router.push("/notes");
-        })
-        .catch((err) => {
-          alert("Cannot load Book");
-          this.$router.push("/notes");
-        });
+    toggleEditNote() {
+      this.$emit("edit-note", this.isEditNote);
+      noteService.save(this.noteToEdit).then((savedNote) => {});
     },
   },
+
+  components: {
+    NoteToolbar,
+    NoteImg,
+    NoteTxt,
+    NoteTodos,
+  },
+  name: "NoteEdit",
 };

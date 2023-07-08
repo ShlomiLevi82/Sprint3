@@ -1,12 +1,13 @@
-.note-list ul {
+.note-list > ul {
   gap: 1em;
   columns: 4 230px;
 
   background-color: var(--ocean-blue);
 }
 
-.note-list ul li {
+.note-list > ul > li {
   display: flex;
+
   flex-direction: column;
   align-content: center;
   align-items: center;
@@ -15,13 +16,13 @@
 
   width: 238px;
   min-height: 10em;
-  margin-bottom: 0.75em;
+  margin: 0.75em;
   break-inside: avoid-column;
 
   border-radius: 8px;
   border: 1px solid rgb(94, 57, 57);
 
-  cursor: pointer;
+  cursor: auto;
 
   transition: transform 0.3s ease-in-out;
 
@@ -29,21 +30,18 @@
   transition: opacity 0.3s ease;
 }
 
-.note-toolbar{
+.note-toolbar {
   opacity: 0;
   transition: opacity 0.3s ease;
 }
 
-.note-list ul li:hover .note-toolbar{
+.note-list > ul > li:hover .note-toolbar {
   opacity: 1;
 }
 
-
-
-.note-list li h2 {
+.note-list > li > h2 {
   text-align: center;
   margin-top: 0.3em;
-
 }
 .note-preview {
   width: inherit;

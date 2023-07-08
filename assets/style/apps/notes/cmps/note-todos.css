@@ -1,0 +1,11 @@
+.note-todos ul > li {
+  list-style: none;
+}
+
+.todos-buttons {
+    display: 0;
+}
+
+.todos-buttons:hover {
+    opacity: 1;
+}
