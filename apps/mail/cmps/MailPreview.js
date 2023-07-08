@@ -1,69 +1,58 @@
+import { svgService } from '../../../services/svg.service.js'
+
 export default {
-  props: ['mail'],
+  name: 'emailPreview',
+  props: ['email'],
   template: `
-
-<RouterLink :to="'/mail/' + mail.id">
-    <section :class="{'mail-preview': true,
-                      'unread-mail': !mail.isRead,
-                      'read-mail': mail.isRead}">
-        <span class="icons"
-          @click.stop.prevent="onToggleStar">
-          {{ mail.isStarred ? '★' : '☆' }}
-        </span>
-        <h4>
-            {{ mail.from }}
-        </h4>
-        <h4>
-            {{ mail.subject }}
-            
-        </h4>
-        <div class="toggle">
-
-          <p>
-            {{ getDate }}
-          </p>
-          <div class="actions">
-            <!-- <span class="material-icons-outlined" >archive</span> -->
+        <div class="email-preview" :class="{read: email.isRead}">
+          <section class="preview-svgs-user">      
+            <div v-if="email.isStarred" 
+              @click.stop="email.isStarred = false" 
+              className=" starFill" 
+              v-html="getSvg('starFill')">
+            </div>
+            <div v-else @click.stop="email.isStarred = true" 
+              className="star" 
+              v-html="getSvg('star')">
+            </div>
+            <div @click="filter('labelImportantFill')" 
+              className="labelImportantFill" 
+              v-html="getSvg('labelImportantFill')">
+          </div>
+          <p>{{ formattedUserName }}</p>
+        </section>
+        <div class="subject-body">
+          <p class="preview-content">{{ email.subject}}</p>
+          <p class="preview-content body-prev">{{ email.body}}</p>
+        </div>
+        <p class="preview-date">{{ email.sentAt}}</p>
+        <div class="preview-btns">
             <span class="material-icons-outlined" 
-            @click.stop.prevent="onRemoveMail(mail)">delete</span>
-            <span class="material-icons-outlined" 
-            @click.stop.prevent="onToggleIsRead(mail)">{{ mail.isRead ? 'mail' : 'drafts' }}</span>
+            @click.stop.prevent="onToggleIsRead(email)">{{ email.isRead ? 'email' : 'drafts' }}</span>
+            <div @click.stop="moveToTrash(email.id)" 
+              class="remove-btn"
+              v-html="getSvg('trash')">
+            </div>
           </div>
         </div>
-          
-    </section> 
-</RouterLink> 
-
- `,
-
-  data() {
-    return {}
-  },
-
-  computed: {
-    getDate() {
-      const now = new Date()
-      const date = new Date(this.mail.sentAt)
-      const year = date.getFullYear()
-      const month = date.toLocaleString('default', { month: 'short' })
-
-      if (now.getFullYear() - year < 1) return year
-      else return month + ' ' + date.getDay()
-    },
-  },
+    `,
   methods: {
-    onToggleIsRead(mail) {
-      mail.isRead = !mail.isRead
+    getSvg(iconName) {
+      return svgService.getMailSvg(iconName)
     },
-    onToggleStar() {
-      this.mail.isStarred = !this.mail.isStarred
-      this.$emit('starred', this.mail)
+    moveToTrash(emailId) {
+      this.$emit('moveToTrash', emailId)
     },
-    onRemoveMail(mail) {
-      const mailToRemove = JSON.parse(JSON.stringify(mail))
-      mailToRemove.removedAt = Date.now()
-      console.log('mailToRemove', mailToRemove)
-      this.$emit('remove', mailToRemove)
+
+    onToggleIsRead(email) {
+      console.log('email', email)
+      email.isRead = !email.isRead
+    },
+  },
+  computed: {
+    formattedUserName() {
+      const idx = this.email.from.indexOf('@')
+      return this.email.from.slice(idx + 1)
     },
   },
 }

@@ -1,24 +1,27 @@
 export default {
   template: `
-          <section class="mail-filter">
-              <input 
-                  v-model="filterBy.txt" 
-                  @input="onSetFilterBy"
-                  type="text" 
-                  placeholder="Search in Mail">
-          </section>
-      `,
+        <section class="email-search-filter">
+            <input
+                v-model="filterBy.txt"
+                @input="filter" 
+                placeholder="🔍 Search mail"
+                type="text" />
+            </section>
+            `,
   data() {
     return {
       filterBy: {
-        txt: '',
+        status: '',
+        txt: '', // no need to support complex text search
+        isRead: true, // (optional property, if missing: show all)
+        isStared: true, // (optional property, if missing: show all)
+        lables: ['important', 'romantic'], // has any of the labels
       },
     }
   },
   methods: {
-    onSetFilterBy() {
+    filter() {
       this.$emit('filter', this.filterBy)
-      console.log('this.filterBy', this.filterBy)
     },
   },
 }

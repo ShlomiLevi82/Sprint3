@@ -1,29 +1,42 @@
-.wrapper {
+.email-details {
+  background-color: rgb(255, 255, 255);
+  width: 100%;
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
+  padding: 15px;
+}
+
+.user-img {
+  border-radius: 50%;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.user-img-name {
   display: flex;
-  gap: 1em;
+  align-items: center;
+}
+.user-img-name p {
+  font-size: 12px;
 }
 
-.mail-main-section {
+.format-name {
+  font-weight: bolder;
+  color: black;
+  font-size: 16px;
+}
+
+.date-and-star {
   display: flex;
-  flex-direction: column;
-  gap: 2em;
 }
 
-.mail-links-section {
+.details-row {
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  max-width: 280px;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.mail-details {
-  padding: 0.5em;
-  border: 1px solid #2c2c2c;
-  border-radius: 15px;
-  margin-inline: 1em;
-  height: 80vh;
-}
-
-.mail-body {
-  background-color: #f5f5f5;
+.subject {
+  font-size: 25px;
+  color: rgb(50, 50, 50);
 }

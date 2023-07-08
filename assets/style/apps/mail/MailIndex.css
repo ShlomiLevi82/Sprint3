@@ -1,36 +1,8 @@
-.mail-index-header {
-  display: flex;
-
-  gap: 1em;
+.main-mail-layout {
+  display: grid;
+  grid-template-columns: 1em 11.25em 1fr 0.8em;
 }
 
-.mail-manu {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1em;
-  padding: 0 0 0 8px;
-  width: fit-content;
-}
-
-.mail-index .mail-manu .compose {
-  display: flex;
-  align-items: center;
-  border: 1px solid #c2c2c2;
-  border-radius: 50px;
-  box-shadow: 1px 1px 2px #c2c2c2;
-  cursor: pointer;
-}
-
-.mail-index .mail-manu .compose:hover {
-  background-color: #ece2e2;
-}
-.index-container {
-  display: flex;
-  justify-content: space-between;
-}
-
-.mail-list {
-  margin-block-start: 1em;
-  margin-inline-end: 1em;
+.email-side-filter {
+  grid-column: 2;
 }

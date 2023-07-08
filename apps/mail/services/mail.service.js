@@ -2,11 +2,6 @@ import { storageService } from '../../../services/async-storage.service.js'
 import { utilService } from '../../../services/util.service.js'
 
 const MAILS_KEY = 'Mails'
-const TRASH_MAILS = 'TrashMail'
-const SHRAE_MAIL = 'shareMailDB'
-const DRAFT_MAIL = 'draftMailDB'
-
-var gFilterBy = { txt: '', minPrice: 0 }
 
 //Demo Data
 
@@ -15,141 +10,82 @@ const loggedinUser = {
   fullname: 'Mahatma Appsus',
 }
 
-const criteria = {
-  status: 'inbox/sent/trash/draft',
-  txt: 'puki', // no need to support complex text search
-  isRead: true, // (optional property, if missing: show all)
-  isStared: true, // (optional property, if missing: show all)
-  lables: ['important', 'romantic'], // has any of the labels
-}
+// const criteria = {
+//   status: 'inbox/sent/trash/draft',
+//   txt: 'puki', // no need to support complex text search
+//   isRead: true, // (optional property, if missing: show all)
+//   isStared: true, // (optional property, if missing: show all)
+//   lables: ['important', 'romantic'], // has any of the labels
+// }
 
 _createMails()
 
-export const mailservice = {
+export const emailService = {
   query,
+  getUser,
   get,
-  remove,
   save,
-  createMail,
-  getSentMails,
-  saveTrashedMail,
-  queryTrashedMail,
-  removeTrashedMail,
-  getImportantMails,
-  getDraftMail,
-  saveDraftMail,
-  CreateNoteMail,
-  saveToNotes,
-  removeDraftedMail,
+  getEmptyEmail,
+  remove,
 }
 
 function query(filterBy = {}) {
-  return storageService.query(MAILS_KEY).then((mails) => {
-    if (gFilterBy.txt) {
-      const regex = new RegExp(gFilterBy.txt, 'i')
-      mails = mails.filter((mail) => regex.test(mail.title))
+  return storageService.query(MAILS_KEY).then((emails) => {
+    if (filterBy.status) {
+      const regex = new RegExp(filterBy.status, 'i')
+      emails = emails.filter((email) => regex.test(email.status))
     }
-    if (gFilterBy.minPrice) {
-      mails = mails.filter((mail) => mail.listPrice >= gFilterBy.minPrice)
-    }
-    // if (gPageIdx !== undefined) {
-    //   const startIdx = gPageIdx * PAGE_SIZE
-    //   mails = mails.slice(startIdx, startIdx + PAGE_SIZE)
-    // }
-    return mails
+    return emails
   })
 }
 
-function getImportantMails(filterBy = {}) {
-  return storageService.query(MAILS_KEY).then((Mails) => {
-    let onlyUserMails = Mails.filter((mail) => mail.from !== 'user@appsus.com')
-    if (filterBy.isImportant) {
-      return onlyUserMails.filter((mail) => mail.isImportant)
-    } else {
-      return onlyUserMails
-    }
-  })
+function get(emailId) {
+  return storageService.get(MAILS_KEY, emailId)
 }
 
-function queryTrashedMail(filterBy = {}) {
-  return storageService.query(TRASH_MAILS).then((Mails) => {
-    if (filterBy.txt) {
-      const regex = new RegExp(filterBy.txt, 'i')
-      return Mails.filter((mail) => regex.test(mail.body))
-    }
-    if (filterBy.isStared) {
-      return Mails.filter((mail) => mail.isStared)
-    } else {
-      return Mails
-    }
-  })
+function remove(emailId) {
+  return storageService.remove(MAILS_KEY, emailId)
 }
 
-function getSentMails(filterBy = {}) {
-  return storageService.query(MAILS_KEY).then((Mails) => {
-    let onlySentMails = Mails.filter(
-      (mail) => mail.from === 'user@appsus.com' && !mail.mailIsDraft
-    )
-    if (filterBy.txt) {
-      const regex = new RegExp(filterBy.txt, 'i')
-      return onlySentMails.filter((mail) => regex.test(mail.body))
-    }
-    if (filterBy.isStared) {
-      return onlySentMails.filter((mail) => mail.isStared)
-    } else {
-      return onlySentMails
-    }
-  })
-}
-
-function getDraftMail() {
-  return storageService.query(DRAFT_MAIL)
-}
-
-function get(MailId) {
-  return storageService.get(MAILS_KEY, MailId).then(_setNextPrevMailId)
-}
-
-function remove(MailId) {
-  return storageService.remove(MAILS_KEY, MailId)
-}
-
-function removeTrashedMail(MailId) {
-  return storageService.remove(TRASH_MAILS, MailId)
-}
-function removeDraftedMail(MailId) {
-  return storageService.remove(DRAFT_MAIL, MailId)
-}
-
-function saveTrashedMail(Mail) {
-  Mail.id = null
-  if (Mail.id) {
-    return storageService.put(TRASH_MAILS, Mail)
+function save(email) {
+  if (email.id) {
+    return storageService.put(MAILS_KEY, email)
   } else {
-    Mail.removedAt = Date.now()
-    return storageService.post(TRASH_MAILS, Mail)
+    return storageService.post(MAILS_KEY, email)
   }
 }
-function save(Mail) {
-  if (Mail.id) {
-    return storageService.put(MAILS_KEY, Mail)
-  } else {
-    return storageService.post(MAILS_KEY, Mail)
+
+function getEmptyEmail(
+  from = 'newUser',
+  to = '',
+  subject = '',
+  body = '',
+  sentAt = '22:10 PM',
+  status = 'inbox'
+) {
+  return { from, to, subject, body, sentAt, status }
+}
+
+function _createEmails() {
+  let emails = utilService.loadFromStorage(MAILS_KEY)
+  if (!emails || !emails.length) {
+    emails = emailsDB
+    utilService.saveToStorage(MAILS_KEY, emails)
   }
 }
-function saveToNotes(Mail) {
-  if (Mail.id) {
-    return storageService.put(SHRAE_MAIL, Mail)
-  } else {
-    return storageService.post(SHRAE_MAIL, Mail)
-  }
+
+function _createEmail(id, body = 'Hello') {
+  const email = getEmptyEmail(id, body)
+  email.id = utilService.makeId()
+  return email
 }
-function saveDraftMail(Mail) {
-  if (Mail.id) {
-    return storageService.put(DRAFT_MAIL, Mail)
-  } else {
-    return storageService.post(DRAFT_MAIL, Mail)
+
+function getUser() {
+  const loggedInUser = {
+    email: 'user@appsus.com',
+    fullName: 'Mahatma Appsus',
   }
+  return loggedInUser
 }
 
 function createDraftMail() {
@@ -181,43 +117,6 @@ function _createMails() {
   }
 }
 
-function CreateNoteMail(title, text) {
-  return {
-    id: null,
-    info: { title, text },
-    isPinned: false,
-    type: 'NoteEmail',
-    style: { backgroundColor: '#ECF2FF' },
-    // isSelected: false,
-    // isStared: false,
-    // isImportant: false,
-    // sentAt: Date.now(),
-    // removedAt: null,
-    // from: loggedinUser.email,
-    // to,
-  }
-}
-
-function createMail(to, subject, body, mailIsDraft) {
-  const Mail = {
-    id: null,
-    subject,
-    body,
-    isRead: false,
-    isSelected: false,
-    isStared: false,
-    isImportant: false,
-    isTrashed: false,
-    sentAt: Date.now(),
-    removedAt: null,
-    mailIsDraft,
-    from: loggedinUser.email,
-    to,
-  }
-
-  return save(Mail)
-}
-
 function _setNextPrevMailId(Mail) {
   return storageService.query(MAILS_KEY).then((Mails) => {
     const MailIdx = Mails.findIndex((currMail) => currMail.id === Mail.id)
@@ -238,14 +137,12 @@ function generateRandomEmails(n) {
     mail.body =
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore laudantium quia explicabo natus reprehenderit a!'
     ;('Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore laudantium quia explicabo natus reprehenderit a!')
-    mail.status = 'inbox'
     mail.isRead = Math.random() >= 0.5
-    mail.isStarred = Math.random() >= 0.5
-    mail.isImportant = Math.random() >= 0.5
-    mail.isTrashed = Math.random() >= 0.5
     mail.sentAt = _randomDate(new Date(2020, 0, 1), new Date(), 0, 24)
+    mail.isStarred = Math.random() >= 0.5
     mail.from = `sender_${i + 1}@example.com`
     mail.to = `recipient_${i + 1}@example.com`
+    mail.status = 'inbox'
     mails.push(mail)
   }
   return mails

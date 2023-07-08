@@ -1,42 +1,49 @@
 import MailPreview from './MailPreview.js'
+import { svgService } from '../../../services/svg.service.js'
+import { eventBus } from '../../../services/event-bus.service.js'
+// @click="remove(email.id)"
 
 export default {
-  name: 'MailList',
-  props: ['mails'],
-  template: `   
-    <section class="mail-list">
-      <div class="mail-count" v-if="mails">Unread Mails: {{ unreadMailCount }}</div> 
-        <ul class="clean-list">
-          <li v-for="mail in mails" :key="mail.id">
-            <MailPreview :mail="mail"
-                    @click="onShowDetails(mail.id)"
-                    @click="onMarkAsRead(mail.id)" 
-                    @checkbox-change="onCheckboxChange(mail)"
-                    @remove="$emit('remove',$event)"
-            ></MailPreview>
-          </li>
-        </ul> 
-      </section>
-  `,
-
+  props: ['emails'],
+  template: `
+    <div class="full-list">
+        <section class="email-list">
+            <div class="empty-div"></div>
+                <div v-for="email in emails" :key="email.id" 
+                 @click.native="showDetails(email.id)"
+                class="email-preview" :email="email">
+                <MailPreview @moveToTrash="moveToTrash" :email="email"/>
+            </div>
+        </section>
+      </div>
+    `,
   methods: {
-    onMarkAsRead(mailId) {
-      this.$emit('markAsRead', mailId)
+    remove(emailId) {
+      this.$emit('remove', emailId)
     },
-
-    onShowDetails(mailId) {
-      console.log('mailId', mailId)
-      this.$emit('select', mailId)
+    getSvg(iconName) {
+      return svgService.getMailSvg(iconName)
+    },
+    showDetails(mailId) {
+      const email = this.emails.find((email) => email.id === mailId)
+      console.log(email)
+      if (email.status === 'draft') {
+        console.log('draft')
+        this.$emit('editDraft', email)
+      } else {
+        email.isRead = true
+        this.$emit('toDetails', { mailId: mailId })
+      }
+    },
+    moveToTrash(emailId) {
+      const email = this.emails.find((email) => email.id === emailId)
+      if (email.status === 'trash') this.remove(emailId)
+      else {
+        email.status = 'trash'
+        eventBus.emit('show-msg', { txt: 'Moved to trash', type: 'success' })
+      }
     },
   },
-
-  computed: {
-    unreadMailCount() {
-      console.log('this.mails', this.mails)
-      return this.mails.filter((mail) => !mail.isRead).length
-    },
-  },
-
   components: {
     MailPreview,
   },

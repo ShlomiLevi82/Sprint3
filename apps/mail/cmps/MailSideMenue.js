@@ -1,75 +1,106 @@
-import Mailcompose from './MailCompose.js'
+import { eventBus } from '../../../services/event-bus.service.js'
+import { svgService } from '../../../services/svg.service.js'
+
+import MailCompose from '../cmps/MailCompose.js'
 
 export default {
-  props: ['unreadMailsCount'],
+  props: ['emails'],
   template: `
-        <section class="mail-manu">
-            <div class="compose" @click.stop="toggleCompose">
-                <span class="btn material-icons-outlined">
-                    create
-                </span>Compose
-            </div>
-            <div class="inbox icon"  @click="selectFolder('inbox')">
-                <span class="material-icons-outlined">
-                    inbox
-                </span> Inbox {{ unreadMailsCount }}
-            </div>
-            <div class="star icon"  @click="selectFolder('starred')">          
-                <span class="material-icons-outlined star">
-                    star_outline
-                </span> Starred 
-            </div>
-            <div class="sent icon"  @click="selectFolder('send')">
-                <span class="material-icons-outlined">
-                    send
-                </span>Sent
-            </div>
-            <div class="draft icon"  @click="selectFolder('draft')">
-                <span class="material-icons-outlined">
-                insert_drive_file
-                </span>Draft
-            </div>
-            <div class="trash icon"  @click="selectFolder('trash')">
-                <span class="material-icons-outlined">
-                delete_outline
-                </span>Trash
-            </div>
-        </section >       
-        <Mailcompose @send="sendMail" v-if="showCompose"/>     
+        <section class="email-side-filter">
+        <MailCompose :noteInfo="noteInfo" @close="isCompose = false" 
+        v-if="isCompose"/>
+        <!-- Compose -->
+        <section @click="isCompose = true" class="filter-section compose-icon">
+          <div className="compose" 
+            v-html="getSvg('compose')"></div>
+            <span>Compose</span>
+         </section>
 
-        `,
+          <!-- Inbox -->
+          <section @click="filter('inbox')" :class="{ 'selected': filterBy.status === 'inbox' }"  class="filter-section-svg">
+          <div className="inbox" 
+            v-html="getSvg('inboxFill')"></div>
+            <span>Inbox</span>
+            <span v-if="emails" class="unread-num">{{getUnreadCount('inbox')}}</span>
+         </section>
 
+           <!-- Starred -->
+           <section @click="filter('starred')" :class="{ 'selected': filterBy.status === 'starred' }" class="filter-section-svg">
+          <div className="star" 
+            v-html="getSvg('star')"></div>
+            <span>Starred</span>
+            <span v-if="emails" class="unread-num">{{getUnreadCount('starred')}}</span>
+         </section>
+            
+          <!-- Sent -->
+          <section @click="filter('sent')" :class="{ 'selected': filterBy.status === 'sent' }" class="filter-section-svg">
+           <div className="sent" 
+            v-html="getSvg('sent')"></div>
+            <span>Sent</span>
+            <span v-if="emails" class="unread-num">{{getUnreadCount('sent')}}</span>
+            </section>
+
+            <!-- Draft -->
+            <section @click="filter('draft')" :class="{ 'selected': filterBy.status === 'drafts' }" class="filter-section-svg">
+              <div className="draft" 
+              v-html="getSvg('drafts')"></div>
+              <span>Drafts</span>
+            </section>
+            <!-- Trash -->
+          <section @click="filter('trash')" :class="{ 'selected': filterBy.status === 'trash' }" class="filter-section-svg">
+           <div className="trash" 
+            v-html="getSvg('trash')"></div>
+            <span>Trash</span>
+            <span v-if="emails" class="unread-num">{{getUnreadCount('trash')}}</span>
+           
+
+            `,
   data() {
     return {
-      showCompose: false,
+      noteInfo: null,
+      isCompose: false,
       filterBy: {
-        txt: '',
+        status: 'inbox',
+        txt: '', // no need to support complex text search
+        isRead: true, // (optional property, if missing: show all)
+        isStared: true, // (optional property, if missing: show all)
+        lables: ['important', 'romantic'], // has any of the labels
       },
     }
   },
-  computed: {
-    unreadMailCount() {
-      return this.mails.filter((mail) => !mail.isRead).length
-    },
+  created() {
+    eventBus.on('openCompose', (email) => {
+      this.isCompose = true
+      eventBus.emit('composeOpened', email)
+    })
   },
-
   methods: {
-    selectFolder(folder) {
-      console.log('folder', folder)
-      this.$emit('selectFolder', folder)
+    filter(status) {
+      this.filterBy.status = status
+      this.$emit('filter', this.filterBy.status)
     },
-    onSetFilterBy() {
-      this.$emit('filter', this.filterBy)
-      console.log('this.filterBy', this.filterBy)
+    getSvg(iconName) {
+      return svgService.getMailSvg(iconName)
     },
-
-    toggleCompose() {
-      console.log('showCompose', this.showCompose)
-      this.showCompose = !this.showCompose
+    getUnreadCount(status) {
+      let unreadEmails = this.emails.filter(
+        (email) => email.status === status && !email.isRead
+      )
+      if (!unreadEmails.length) return
+      return unreadEmails.length
     },
   },
-
+  watch: {
+    '$route.query': {
+      immediate: true,
+      handler(newVal) {
+        if (Object.keys(newVal).length === 0) return
+        this.isCompose = true
+        this.noteInfo = newVal
+      },
+    },
+  },
   components: {
-    Mailcompose,
+    MailCompose,
   },
 }

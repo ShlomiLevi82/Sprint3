@@ -1,62 +1,56 @@
-import { mailservice } from '../services/mail.service.js'
+import { emailService } from '../services/mail.service.js'
+import { svgService } from '../../../services/svg.service.js'
+// import { eventBusService } from '../services/event-bus.service.js'
 
 export default {
-  props: ['mail'],
   template: `
-
-<section class="mail-links-section">
-  <RouterLink :to="'/mail/' + mail.nextMailId">Next Mail</RouterLink> |
-  <RouterLink :to="'/mail/' + mail.prevMailId">Prev Mail</RouterLink> |
-  <RouterLink to="/mail">Back to Inbox</RouterLink>    
-</section>           
-
-<section v-if="mail"  class="mail-details">
-  <h3> {{ mail.subject }}</h3>
-  <h4>From <{{ mail.from }}></h4>
-    <h3>sent at {{ mail.sentAt }}</h3>
-    <main class="mail-body">
-        <p>{{ mail.body }}</p>
-    </main>
-</section>        
-        
-        `,
-
+  
+        <section class="email-details" v-if="email">
+              <p class="subject">{{email.subject}}</p>
+              <div class="details-row">             
+                <span class="format-name">{{formattedUserName}}</span>
+                <p>{{email.from}}</p>
+              </div>
+              <div class="date-and-star">
+                {{formattedTime}}
+                <div @click="filter('star')" 
+                  className="star" 
+                  v-html="getSvg('star')">
+                </div>
+              </div>
+              <p>{{email.body}}</p>
+              <img :src="email.img">
+              <br>
+              <br>
+              <RouterLink to="/mail">Back to list</RouterLink>
+        </section>
+    `,
   data() {
     return {
-      mail: null,
+      email: null,
     }
   },
   created() {
-    this.loadMail()
+    const { id } = this.$route.params
+    emailService.get(id).then((email) => {
+      this.email = email
+    })
   },
   methods: {
-    loadMail() {
-      const { mailId } = this.$route.params
-      console.log('mailId..', mailId)
-      mailservice
-        .get(mailId)
-        .then((mail) => {
-          console.log('mail', mail)
-          this.mail = mail
-        })
-        .catch((err) => {
-          alert('Cannot load mail')
-          this.$router.push('/mail')
-        })
-    },
-
-    onClose() {
-      this.$emit('close')
-    },
-  },
-  watch: {
-    mailId() {
-      this.loadMail()
+    getSvg(iconName) {
+      return svgService.getMailSvg(iconName)
     },
   },
   computed: {
-    mailId() {
-      return this.$route.params.mailId
+    formattedUserName() {
+      const idx = this.email.from.indexOf('@')
+      return this.email.from.slice(idx + 1)
     },
+    formattedTime() {
+      return new Date()
+    },
+  },
+  components: {
+    emailService,
   },
 }
