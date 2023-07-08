@@ -22,7 +22,7 @@ export default {
           this.$emit("noteAdd", savedNote);
         })
         .catch((err) => {
-          alert("Cannot load Book");
+          alert("Cannot load Note");
         });
     },
   },
