@@ -1,9 +1,6 @@
 .note-todos ul > li {
   list-style: none;
-}
-
-.todos-buttons {
-    /* opacity: 0; */
+  cursor: pointer;
 }
 
 .todos-buttons:hover {
