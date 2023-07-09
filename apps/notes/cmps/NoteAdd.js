@@ -11,11 +11,10 @@ export default {
       noteToEdit: null,
     };
   },
-  created() {
-    this.noteToEdit = noteService.getEmptyNote();
-  },
   methods: {
     add() {
+      this.noteToEdit = noteService.getEmptyNote();
+
       noteService
         .save(this.noteToEdit)
         .then((savedNote) => {
@@ -27,4 +26,3 @@ export default {
     },
   },
 };
-
